@@ -21,6 +21,7 @@ build_project() {
     fi
 
     cp -f obj/Debug/net481/"$project".dll ../../TestPlugin/server/SL/LabAPI/plugins/global/
+    cp -f obj/Debug/net481/"$project".dll ../releases/
     rm -rf ./release/
 
     cd ..
