@@ -27,7 +27,7 @@ namespace CustomItemLib.API
         /// <inheritdoc/>
         public abstract string Id { get; }
         /// <inheritdoc/>
-        public string PluginNamespace => Assembly.GetExecutingAssembly().GetName().Name.ToSnakeCase();
+        public string PluginNamespace => GetType().Assembly.GetName().Name.ToSnakeCase();
         /// <inheritdoc/>
         public virtual ItemNamespace Namespace => ItemNamespace.Get(PluginNamespace, Id);
 
