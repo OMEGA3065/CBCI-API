@@ -4,29 +4,54 @@
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <DebugType>embedded</DebugType>
+    <PackageId>Omega3065.ComponentBasedCustomItemAPI</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>OMEGA3065</Authors>
+    <IsPackable>true</IsPackable>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/OMEGA3065/CBCI-API/</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="..\..\References\Assembly-CSharp.dll">
+      <Private>false</Private>
+      <Pack>false</Pack>
     </Reference>
     <Reference Include="..\..\References\CommandSystem.Core.dll">
+      <Private>false</Private>
+      <Pack>false</Pack>
     </Reference>
     <Reference Include="..\..\TestPlugin\server\SL\LabAPI\plugins\global\0Harmony.dll">
+      <Private>false</Private>
+      <Pack>false</Pack>
     </Reference>
     <Reference Include="MEC">
       <HintPath>..\..\References\Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>false</Private>
+      <Pack>false</Pack>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\References\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+      <Pack>false</Pack>
     </Reference>
     <Reference Include="Mirror">
       <HintPath>..\..\References\Mirror.dll</HintPath>
+      <Private>false</Private>
+      <Pack>false</Pack>
     </Reference>
     <Reference Include="Mono.Security">
       <HintPath>..\..\References\Mono.Security.dll</HintPath>
+      <Private>false</Private>
+      <Pack>false</Pack>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>..\..\References\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>false</Private>
+      <Pack>false</Pack>
     </Reference>
+    <None Include="..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\README.md" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Northwood.LabAPI" Version="1.1.4" />

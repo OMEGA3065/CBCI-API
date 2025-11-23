@@ -7,6 +7,9 @@ You can find examples on how to use the API in the [Examples folder](https://git
 Install this as any other [LabAPI](https://github.com/northwood-studios/LabAPI) plugin.
 Installation guide in the [LabAPI Readme](https://github.com/northwood-studios/LabAPI).
 
+# Developer Package reference
+This Library is also avalible as NuGet package. See: https://www.nuget.org/packages/Omega3065.ComponentBasedCustomItemAPI/
+
 # Developer Wiki
 At this momement the only wiki is viewing the quite well commented code in combination with
 looking at the provided [Examples](https://github.com/OMEGA3065/CBCI-API/tree/main/CustomItemExamples).
