@@ -14,7 +14,7 @@ namespace CustomItemLib
 
         public override string Author => "OMEGA3065";
 
-        public override Version Version => new(0, 1, 0);
+        public override Version Version => new(0, 1, 2);
         public override LoadPriority Priority => LoadPriority.High;
         public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
         

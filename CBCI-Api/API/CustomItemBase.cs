@@ -58,15 +58,15 @@ namespace CustomItemLib.API
         /// </summary>
         public CustomItemBase()
         {
-            ComponentAttributes = this.GetType().GetCustomAttributes<CustomItemAttributeBase>().Select(a => a.Component as ICustomItemComponent<T>).Where(a =>
+            ComponentAttributes = this.GetType().GetCustomAttributes<CustomItemAttributeBase>().Select(a =>
             {
-                if (a == null)
+                if (a.Component is not ICustomItemComponent<T> component)
                 {
                     Logger.Error($"Failed to cast component of type {a.GetType()} to {typeof(ICustomItemComponent<T>)}.{(a.GetType().GetGenericArguments() != typeof(ICustomItemComponent<T>).GetGenericArguments() ? " Please check that your ICustomItemComponent<ItemInstanceBase> the ItemInstanceBase matches the one used for this item." : "")} This Component will not be added to the item and will be skipped!");
-                    return false;
+                    return null;
                 }
-                return true;
-            }).ToList();
+                return component;
+            }).Where(a => a != null).ToList();
             
             SubscribeEvents();
             ComponentAttributes.ForEach(c => c.InitComponent(this));

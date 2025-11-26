@@ -31,6 +31,17 @@ namespace CustomItemLib.API
         }
 
         /// <summary>
+        /// Unregisters a Custom Item Definition.
+        /// </summary>
+        /// <param name="item">The custom item definition to unregister.</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>Whether or not the item was unregistered successfully.</returns>
+        public static bool UnregisterItem(ICustomItem<object> item)
+        {
+            return items.Remove(item.Namespace);
+        }
+
+        /// <summary>
         /// Used for obtaining an item based on a namespace.
         /// </summary>
         /// <param name="itemNamespace">The namespace of the target item.</param>
@@ -78,7 +89,7 @@ namespace CustomItemLib.API
                     var item = (ICustomItem<object>)Activator.CreateInstance(type);
                     if (RegisterItem(item))
                     {
-                        registeredItems.AddItem(item);
+                        registeredItems = registeredItems.AddItem(item);
                     }
                 }
                 catch (Exception ex)
@@ -96,6 +107,32 @@ namespace CustomItemLib.API
         public static IEnumerable<ICustomItem<object>> RegisterAllItems()
         {
             return RegisterAllItems(Assembly.GetCallingAssembly());
+        }
+
+        /// <summary>
+        /// Unregisters all Item definitions from a specified assembly.
+        /// </summary>
+        /// <param name="assembly">The assembly to search for item definitions.</param>
+        /// <returns>An <see cref="IEnumerable{ICustomItem{object}}"/> of definitions that have been successfully registered.</returns>
+        public static IEnumerable<ICustomItem<object>> UnregisterAllItems(Assembly assembly)
+        {
+            IEnumerable<ICustomItem<object>> unregisteredItems = [];
+            foreach (var item in items.Values)
+            {
+                if (item.GetType().Assembly != assembly) continue;
+                if (UnregisterItem(item))
+                    unregisteredItems = unregisteredItems.AddItem(item);
+            }
+            return unregisteredItems;
+        }
+
+        /// <summary>
+        /// Unregisters all Item definitions in a <see cref="Assembly.GetCallingAssembly"/> assembly.
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{ICustomItem{object}}"/> of definitions that have been successfully registered.</returns>
+        public static IEnumerable<ICustomItem<object>> UnregisterAllItems()
+        {
+            return UnregisterAllItems(Assembly.GetCallingAssembly());
         }
     }
 }

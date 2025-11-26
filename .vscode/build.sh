@@ -20,8 +20,8 @@ build_project() {
         echo -e "\033[32mBuild succeeded for $project\033[0m"
     fi
 
-    cp -f obj/Debug/net481/"$project".dll ../../TestPlugin/server/SL/LabAPI/plugins/global/
-    cp -f obj/Debug/net481/"$project".dll ../releases/
+    cp -f obj/Debug/net48/"$project".dll ../../TestPlugin/server/SL/LabAPI/plugins/global/
+    cp -f obj/Debug/net48/"$project".dll ../releases/
     rm -rf ./release/
 
     cd ..
