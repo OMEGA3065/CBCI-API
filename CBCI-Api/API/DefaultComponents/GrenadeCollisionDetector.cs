@@ -22,6 +22,8 @@ public class CollisionDetector : MonoBehaviour
     /// </summary>
     GameObject IgnoredObject = null;
 
+    bool CollisionActive = false;
+
     /// <summary>
     /// Sets up this <see cref="CollisionDetector"/>.
     /// </summary>
@@ -30,9 +32,11 @@ public class CollisionDetector : MonoBehaviour
         CollisionAction = collisionAction;
         IgnoredObject = ignoredObject;
     }
-    
+
     public void OnCollisionEnter(Collision collision)
     {
+        if (CollisionActive)
+            return;
         if (CollisionAction is null)
             return;
         if (IgnoredObject is not null && collision?.collider?.gameObject == IgnoredObject)
@@ -40,6 +44,15 @@ public class CollisionDetector : MonoBehaviour
         if (collision.collider.gameObject.TryGetComponent<EffectGrenade>(out _))
             return;
 
+        CollisionActive = true;
         CollisionAction();
+    }
+    
+    public void OnCollisionExit(Collision collision)
+    {
+        if (!CollisionActive)
+            return;
+
+        CollisionActive = false;
     }
 }
