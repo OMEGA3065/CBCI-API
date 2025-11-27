@@ -27,9 +27,9 @@ namespace CustomItemLib.Commands
             {
                 targetPlayers.Add(runningPlayer);
             }
-            else if (arguments.Count < 2 && TryGetRAPlayerIds(arguments, 1, out var hubs))
+            else if (arguments.Count == 2 && TryGetRAPlayerIds(arguments, 1, out var hubs))
             {
-                targetPlayers.AddRange(hubs.Select(h => Player.TryGet(sender, out var player) ? player : null).OfType<Player>());
+                targetPlayers.AddRange(hubs.Select(h => Player.Get(h)));
             }
             else
             {
