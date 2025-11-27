@@ -28,7 +28,8 @@ namespace CustomItemLib.Commands
                 string targetPluginSpace = arguments.First();
                 if (targetPluginSpace == PrintAllItemsFlag)
                 {
-                    response = $"{CustomItemManager.items.Count} items were found in all namespaces\nList of items: [\n{CustomItemManager.items.Select(kvp => $"{kvp.Key} => {kvp.Value.Name}").Aggregate((a, b) => $"{a}\n{b}")}\n]";
+                    var list3 = CustomItemManager.items.Select(kvp => $"{kvp.Key} => {kvp.Value.Name}");
+                    response = $"{CustomItemManager.items.Count} items were found in all namespaces\nList of items: [\n{(list3.Count() != 0 ? list3.Aggregate((a, b) => $"{a}\n{b}") : "")}\n]";
                     return true;
                 }
                 List<(string @namespace, string itemName)> Items = [];
@@ -44,14 +45,15 @@ namespace CustomItemLib.Commands
                 }
                 if (Items.Count == 0)
                 {
-                    response = $"No items could be found in {targetPluginSpace}:*\nList of namespaces registered: [\n{CustomItemManager.items.Keys.Select(ns => ns.PluginNamespace).Distinct().Aggregate((a, b) => $"{a}\n{b}")}\n]";
+                    var list2 = CustomItemManager.items.Keys.Select(ns => ns.PluginNamespace).Distinct();
+                    response = $"No items could be found in {targetPluginSpace}:*\nList of namespaces registered: [\n{(list2.Count() != 0 ? list2.Aggregate((a, b) => $"{a}\n{b}") : "")}\n]";
                     return false;
                 }
                 response = $"{Items.Count} items were found in {targetPluginSpace}:*\nList of items: [\n{Items.Select(tuple => $"{tuple.@namespace} => {tuple.itemName}").Aggregate((a, b) => $"{a}\n{b}")}\n]";
                 return true;
             }
             var list = CustomItemManager.items.Keys.Select(ns => ns.PluginNamespace).Distinct();
-            response = $"{list.Count()} Plugin Namespaces have been registerd.\nUse cbci list <Namespace> for items in one of the namespaces found below. Or use cbci list {PrintAllItemsFlag} to print all items.\nList of Plugin Namespaces: [\n{list.Aggregate((a, b) => $"{a}\n{b}")}\n]";
+            response = $"{list.Count()} Plugin Namespaces have been registerd.\nUse cbci list <Namespace> for items in one of the namespaces found below. Or use cbci list {PrintAllItemsFlag} to print all items.\nList of Plugin Namespaces: [\n{(list.Count() != 0 ? list.Aggregate((a, b) => $"{a}\n{b}") : "")}\n]";
             return true;
         }
     }
