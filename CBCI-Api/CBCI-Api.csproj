@@ -4,6 +4,7 @@
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <DebugType>embedded</DebugType>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageId>Omega3065.ComponentBasedCustomItemAPI</PackageId>
     <Version>0.1.3</Version>
     <Authors>OMEGA3065</Authors>
@@ -13,10 +14,10 @@
     <RepositoryUrl>https://github.com/OMEGA3065/CBCI-API/</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="..\..\References\Assembly-CSharp.dll">
-      <Private>false</Private>
-      <Pack>false</Pack>
-    </Reference>
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
+
+    <!-- Publicize directly when referencing -->
+    <Reference Include="..\..\References\Assembly-CSharp.dll" Publicize="true" Private="false" Pack="false" />
     <Reference Include="..\..\References\CommandSystem.Core.dll">
       <Private>false</Private>
       <Pack>false</Pack>
@@ -47,6 +48,11 @@
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>..\..\References\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>false</Private>
+      <Pack>false</Pack>
+    </Reference>
+    <Reference Include="ProjectMER">
+      <HintPath>..\..\CustomReferences\ProjectMER.dll</HintPath>
       <Private>false</Private>
       <Pack>false</Pack>
     </Reference>
