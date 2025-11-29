@@ -1,3 +1,4 @@
+using CustomItemLib.Compat.RaCustomMenu;
 using LabApi.Features.Console;
 using RaCustomMenuLabApi.API;
 
@@ -5,9 +6,12 @@ namespace CustomItemLib.Compat;
 
 internal static class RaCustomMenuCompat
 {
+    private static bool HasInicialized = false;
     public static void Init()
     {
         if (CustomItemLibPlugin.Instance?.RaCustomMenuFound != true) return;
-        Provider.RegisterAllProviders();
+        if (HasInicialized) return;
+        ItemNamespaceProvider.Init();
+        HasInicialized = true;
     }
 }

@@ -5,6 +5,7 @@ using CustomItemLib.API.DefaultComponents;
 
 namespace CustomItemExamples.Example
 {
+    [CustomItem(ItemType.GrenadeHE)]
     [CustomItemAttributeBase(typeof(ItemSelectionHintComponent<TestGrenadeInstance>))]
     [CustomItemAttributeBase(typeof(ColliderExplodeComponent<TestGrenadeInstance>))]
     public class InstantGrenade : CustomGrenade<TestGrenadeInstance>

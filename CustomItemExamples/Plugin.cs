@@ -45,11 +45,12 @@ namespace CustomItemExamples
             // ];
             // items.ForEach(item => CustomItemManager.RegisterItem(item));
 
-            CustomItemManager.RegisterAllItems(Assembly.GetExecutingAssembly());
+            CustomItemManager.RegisterAllItems();
         }
 
         public override void Disable()
         {
+            CustomItemManager.UnregisterAllItems();
             _harmony.UnpatchAll();
         }
     }
