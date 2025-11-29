@@ -29,8 +29,8 @@ public interface IItemHeldSchematic
 /// A component used for attaching a <see cref="SchematicObject"/> to a <see cref="CustomItemBase{T}"/>.
 /// This Schematic is visible when the item is held by the player.
 /// The actual item model of the held item is not modified and is not hidden.
-/// The item model support integration with <see cref="IDamagableItem"/> <see cref="CustomItemBase{T}"/>es.
-/// - If the HeldItemModel is damaged, it will call the <see cref="IDamagableItem::ApplyDamage"/> function.
+/// The item model support integration with <see cref="IDamageableItem"/> <see cref="CustomItemBase{T}"/>es.
+/// - If the HeldItemModel is damaged, it will call the <see cref="IDamageableItem::ApplyDamage"/> function.
 /// - The damage will only be applied when shooting a primitve, name of which begins with <c>Hitbox</c>.
 /// - The <c>Hitbox</c> primitives MUST have their CenterOfMass outside of any other primitives.
 /// The held item only has collision with attacks. It does not collide with other objects.
@@ -119,7 +119,7 @@ public class HeldItemModel<T> : ComponentBase<T>
             else
                 toy.NetworkPrimitiveFlags = PrimitiveFlags.None;
 
-            if (itemInstance is not IDamagableItem damagableItem) return;
+            if (itemInstance is not IDamageableItem damagableItem) return;
             toy.PrimitiveFlags |= (PrimitiveFlags)4;
 
             if (b.name.StartsWith("Hitbox"))

@@ -6,10 +6,10 @@ namespace CustomItemLib.API.DefaultComponents;
 
 /// <summary>
 /// An interface defining all expected methods of an <see cref="ItemInstanceBase"/>.
-/// Used by <see cref="DamagableItemComponent{T}"/>.
-/// Attach either a <see cref="DamagableItemComponent{T}"/> or a <see cref="DamagableHoldableItemComponent{T}"/>
+/// Used by <see cref="DamageableItemComponent{T}"/>.
+/// Attach either a <see cref="DamageableItemComponent{T}"/> or a <see cref="DamageableHoldableItemComponent{T}"/>
 /// </summary>
-public interface IDamagableItem
+public interface IDamageableItem
 {
     public delegate void ApplyDamageDelegate(float damageAmount);
     public float Health { get; set; }
@@ -20,11 +20,11 @@ public interface IDamagableItem
 
 /// <summary>
 /// A component used for changing the default method of <see cref="IDamagableItem::ApplyDamage"/>.
-/// In case the item is also using the <see cref="HeldItemModel{T}"/>, please use <see cref="DamagableHoldableItemComponent{T}" instead./>
+/// In case the item is also using the <see cref="HeldItemModel{T}"/>, please use <see cref="DamageableHoldableItemComponent{T}" instead./>
 /// </summary>
 /// <typeparam name="T"><inheritdoc/></typeparam>
-public class DamagableItemComponent<T> : ComponentBase<T>
-    where T : ItemInstanceBase, IDamagableItem
+public class DamageableItemComponent<T> : ComponentBase<T>
+    where T : ItemInstanceBase, IDamageableItem
 {
     public override void OnCreatedInstance(T itemInstance)
     {
@@ -56,8 +56,8 @@ public class DamagableItemComponent<T> : ComponentBase<T>
 /// This implementation prevents bugs that arise from items that also use the <see cref="HeldItemModel{T}"/> component./>
 /// </summary>
 /// <typeparam name="T"><inheritdoc/></typeparam>
-public class DamagableHoldableItemComponent<T> : DamagableItemComponent<T>
-    where T : ItemInstanceBase, IDamagableItem, IItemHeldSchematic
+public class DamageableHoldableItemComponent<T> : DamageableItemComponent<T>
+    where T : ItemInstanceBase, IDamageableItem, IItemHeldSchematic
 {
     protected override void RemoveItem(Item item, T itemInstance)
     {
