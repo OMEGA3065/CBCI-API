@@ -3,11 +3,19 @@ using LabApi.Events.Arguments.ServerEvents;
 
 namespace CustomItemLib.API.DefaultComponents;
 
+/// <summary>
+/// An interface defining all expected methods of an <see cref="ItemInstanceBase"/>.
+/// Used by <see cref="ExplosionActionComponent{T}"/>.
+/// </summary>
 public interface IItemExplosionAction
 {
     public void Explode(ProjectileExplodingEventArgs ev);
 }
 
+/// <summary>
+/// A component used for adding custom OnExplosion implementation to a <see cref="CustomItemBase{T}"/>.
+/// </summary>
+/// <typeparam name="T"><inheritdoc/></typeparam>
 public class ExplosionActionComponent<T> : ComponentBase<T>
     where T : ItemInstanceBase, IItemExplosionAction
 {

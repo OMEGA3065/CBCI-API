@@ -15,13 +15,27 @@ using Logger = LabApi.Features.Console.Logger;
 
 namespace CustomItemLib.API.DefaultComponents.ProjectMER;
 
+/// <summary>
+/// An interface defining all expected methods of an <see cref="ItemInstanceBase"/>.
+/// Used by <see cref="HeldItemModel{T}"/>.
+/// </summary>
 public interface IItemHeldSchematic
 {
     public string HeldItemSchematicName { get; }
     public SchematicObject HeldItemAttachedSchematic { get; set; }
-    public Vector3 HeldItemSchematicOffset { get; }
 }
 
+/// <summary>
+/// A component used for attaching a <see cref="SchematicObject"/> to a <see cref="CustomItemBase{T}"/>.
+/// This Schematic is visible when the item is held by the player.
+/// The actual item model of the held item is not modified and is not hidden.
+/// The item model support integration with <see cref="IDamagableItem"/> <see cref="CustomItemBase{T}"/>es.
+/// - If the HeldItemModel is damaged, it will call the <see cref="IDamagableItem::ApplyDamage"/> function.
+/// - The damage will only be applied when shooting a primitve, name of which begins with <c>Hitbox</c>.
+/// - The <c>Hitbox</c> primitives MUST have their CenterOfMass outside of any other primitives.
+/// The held item only has collision with attacks. It does not collide with other objects.
+/// </summary>
+/// <typeparam name="T"><inheritdoc/></typeparam>
 public class HeldItemModel<T> : ComponentBase<T>
     where T : ItemInstanceBase, IItemHeldSchematic
 {

@@ -4,6 +4,11 @@ using Utils.NonAllocLINQ;
 
 namespace CustomItemLib.API.DefaultComponents;
 
+/// <summary>
+/// An interface defining all expected methods of an <see cref="ItemInstanceBase"/>.
+/// Used by <see cref="DamagableItemComponent{T}"/>.
+/// Attach either a <see cref="DamagableItemComponent{T}"/> or a <see cref="DamagableHoldableItemComponent{T}"/>
+/// </summary>
 public interface IDamagableItem
 {
     public delegate void ApplyDamageDelegate(float damageAmount);
@@ -13,6 +18,11 @@ public interface IDamagableItem
     public ApplyDamageDelegate ApplyDamage { get; set; }
 }
 
+/// <summary>
+/// A component used for changing the default method of <see cref="IDamagableItem::ApplyDamage"/>.
+/// In case the item is also using the <see cref="HeldItemModel{T}"/>, please use <see cref="DamagableHoldableItemComponent{T}" instead./>
+/// </summary>
+/// <typeparam name="T"><inheritdoc/></typeparam>
 public class DamagableItemComponent<T> : ComponentBase<T>
     where T : ItemInstanceBase, IDamagableItem
 {
@@ -41,6 +51,11 @@ public class DamagableItemComponent<T> : ComponentBase<T>
     }
 }
 
+/// <summary>
+/// A component used for changing the default method of <see cref="IDamagableItem::ApplyDamage"/>.
+/// This implementation prevents bugs that arise from items that also use the <see cref="HeldItemModel{T}"/> component./>
+/// </summary>
+/// <typeparam name="T"><inheritdoc/></typeparam>
 public class DamagableHoldableItemComponent<T> : DamagableItemComponent<T>
     where T : ItemInstanceBase, IDamagableItem, IItemHeldSchematic
 {

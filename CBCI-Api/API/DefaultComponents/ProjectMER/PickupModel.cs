@@ -10,16 +10,22 @@ using Logger = LabApi.Features.Console.Logger;
 
 namespace CustomItemLib.API.DefaultComponents.ProjectMER;
 
+/// <summary>
+/// An interface defining all expected methods of an <see cref="ItemInstanceBase"/>.
+/// Used by <see cref="PickupModel{T}"/>.
+/// </summary>
 public interface IItemPickupSchematic
 {
     public string PickupSchematicName { get; }
 }
 
-// public interface IItemPickupSizedSchematic
-// {
-//     public Vector3 PickupSchematicSize { get; }
-// }
-
+/// <summary>
+/// A component used for attaching a <see cref="SchematicObject"/> to a <see cref="CustomItemBase{T}"/>.
+/// This Schematic is visible when the item is dropped on the ground as a <see cref="Pickup"/>.
+/// The actual item model of the pickup is not modified and is not hidden.
+/// The pickup item model doesn't collide with any objects.
+/// </summary>
+/// <typeparam name="T"><inheritdoc/></typeparam>
 public class PickupModel<T> : ComponentBase<T>
     where T : ItemInstanceBase, IItemPickupSchematic
 {

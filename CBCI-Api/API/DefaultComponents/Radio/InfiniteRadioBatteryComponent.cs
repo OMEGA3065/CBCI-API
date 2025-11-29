@@ -6,6 +6,10 @@ using LabApi.Events.Arguments.ServerEvents;
 
 namespace WackyGrenades.CustomItems.ItemComponents;
 
+/// <summary>
+/// A component used for making a radio item never run of battery. <see cref="CustomItemBase{T}"/>.
+/// </summary>
+/// <typeparam name="T"><inheritdoc/></typeparam>
 public class InfiniteRadioBatteryComponent<T> : ComponentBase<T>
     where T : ItemInstanceBase
 {

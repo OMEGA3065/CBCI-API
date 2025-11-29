@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace WackyGrenades.CustomItems.Components
 {
+    /// <summary>
+    /// An <see cref="UnityEngine.MonoBehaviour"/> handling damage detection.
+    /// Inteded to be used with <see cref="IDamagableItem"/> items.
+    /// </summary>
     public class DamageableObject : MonoBehaviour, IDestructible
     {
         private PrimitiveObjectToy primitive;

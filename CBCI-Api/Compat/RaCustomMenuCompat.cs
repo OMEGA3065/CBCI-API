@@ -3,7 +3,7 @@ using RaCustomMenuLabApi.API;
 
 namespace CustomItemLib.Compat;
 
-public static class RaCustomMenuCompat
+internal static class RaCustomMenuCompat
 {
     public static void Init()
     {

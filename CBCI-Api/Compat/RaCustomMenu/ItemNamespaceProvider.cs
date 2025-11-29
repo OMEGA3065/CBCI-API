@@ -8,6 +8,9 @@ using RaCustomMenuLabApi.API;
 
 namespace CustomItemLib.Compat.RaCustomMenu;
 
+/// <summary>
+/// Provides the RaCustomMenu functionality allowing easier giving of items.
+/// </summary>
 public class GiveItemsDynamicProvider : Provider
 {
     private List<Player> allowedPlayers = new List<Player>();

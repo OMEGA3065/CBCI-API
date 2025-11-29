@@ -6,12 +6,20 @@ using LabApi.Events.Arguments.ServerEvents;
 
 namespace WackyGrenades.CustomItems.ItemComponents;
 
+/// <summary>
+/// An interface defining all expected methods of an <see cref="ItemInstanceBase"/>.
+/// Used by <see cref="RadioButtonLinkComponent{T}"/>.
+/// </summary>
 public interface IItemRadioButtons
 {
     public void LeftClickRadio(PlayerChangingRadioRangeEventArgs ev);
     public void RightClickRadio(PlayerTogglingRadioEventArgs ev);
 }
 
+/// <summary>
+/// A component used for adding custom radio usage to a <see cref="CustomItemBase{T}"/>.
+/// </summary>
+/// <typeparam name="T"><inheritdoc/></typeparam>
 public class RadioButtonLinkComponent<T> : ComponentBase<T>
     where T : ItemInstanceBase, IItemRadioButtons
 {
