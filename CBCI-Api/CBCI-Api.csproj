@@ -22,6 +22,10 @@
       <Private>false</Private>
       <Pack>false</Pack>
     </Reference>
+    <Reference Include="..\..\TestPlugin\server\SL\LabAPI\plugins\global\RaCustomMenuLabApi.dll">
+      <Private>false</Private>
+      <Pack>false</Pack>
+    </Reference>
     <Reference Include="..\..\TestPlugin\server\SL\LabAPI\plugins\global\0Harmony.dll">
       <Private>false</Private>
       <Pack>false</Pack>
@@ -48,6 +52,11 @@
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>..\..\References\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>false</Private>
+      <Pack>false</Pack>
+    </Reference>
+    <Reference Include="NorthwoodLib">
+      <HintPath>..\..\References\NorthwoodLib.dll</HintPath>
       <Private>false</Private>
       <Pack>false</Pack>
     </Reference>
