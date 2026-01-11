@@ -1,31 +1,24 @@
+using CommandSystem;
 using CustomItemLib.API;
 using CustomItemLib.Patches;
 using LabApi.Features.Console;
+using LabApi.Features.Permissions;
 using LabApi.Features.Wrappers;
 using NetworkManagerUtils.Dummies;
 using NorthwoodLib.Pools;
-using RaCustomMenuLabApi.API;
+using RaCustomMenu.API;
 
 namespace CustomItemLib.Compat.RaCustomMenu;
 
 /// <summary>
 /// Provides the RaCustomMenu functionality allowing easier giving of items.
 /// </summary>
-public static class ItemNamespaceProvider
+public class ItemNamespaceProvider : Provider
 {
-    public static string CategoryName => "CBCI Give Item";
-    public static bool IsDirty => true;
+    public override string CategoryName => "CBCI Give Item";
+    public override bool IsDirty { get; } = true;
 
     private static readonly List<string> NamespacesRegistered = [];
-
-    public static void Init()
-    {
-        foreach (var space in NamespacesRegistered)
-        {
-            Provider.UnregisterDynamicProvider(space);
-        }
-        Provider.RegisterDynamicProvider(CategoryName, IsDirty, DynamicFunc, null);
-    }
 
     private static void RegisterNameSpace(string pluginNamespace)
     {
@@ -33,8 +26,6 @@ public static class ItemNamespaceProvider
         {
             List<DummyAction> list = [new DummyAction("<color=red>[CLOSE]</color>", () =>
             {
-                if (LastDummyCommandIssuer.Player?.HasPermission(PlayerPermissions.GivingItems) != true)
-                    return;
                 Provider.UnregisterDynamicProvider($"{pluginNamespace}");
             })];
             foreach (var ci in CustomItemManager.items)
@@ -44,8 +35,6 @@ public static class ItemNamespaceProvider
 
                 list.Add(new DummyAction(ci.Key.ItemIdentifier, () =>
                 {
-                    if (LastDummyCommandIssuer.Player?.HasPermission(PlayerPermissions.GivingItems) != true)
-                        return;
                     if (!CustomItemManager.TryGetItem(ci.Key, out var item))
                     {
                         LastDummyCommandIssuer.Player.SendConsoleMessage($"Could not find an item under the namespace of {ci.Key}. Please make sure that item exists.");
@@ -57,11 +46,10 @@ public static class ItemNamespaceProvider
                 }));
             }
             return list;
-        }, null);
-        NamespacesRegistered.Add(pluginNamespace);
+        }, (sender) => sender.CheckPermission(PlayerPermissions.GivingItems));
     }
 
-    private static List<DummyAction> DynamicFunc(ReferenceHub hub)
+    public override List<DummyAction> AddAction(ReferenceHub hub)
     {
         List<DummyAction> list = [];
         var foundNamespaces = HashSetPool<string>.Shared.Rent();
@@ -75,12 +63,15 @@ public static class ItemNamespaceProvider
             list.Add(
                 new DummyAction($"{item.Key.PluginNamespace}", () =>
                 {
-                    if (LastDummyCommandIssuer.Player?.HasPermission(PlayerPermissions.GivingItems) != true)
-                        return;
                     RegisterNameSpace(item.Key.PluginNamespace);
                 })
             );
         }
         return list;
+    }
+
+    public override bool MayExecuteThis(ICommandSender sender)
+    {
+        return sender.CheckPermission(PlayerPermissions.GivingItems);
     }
 }

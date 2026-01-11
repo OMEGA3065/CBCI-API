@@ -53,7 +53,7 @@ namespace CustomItemLib
             _harmony = new Harmony("omega3065.custom_item_lib");
             _harmony.PatchAll();
 
-            Timing.RunCoroutine(AddPluginCompatibility("RaCustomMenu", () => {
+            Timing.RunCoroutine(AddPluginCompatibility("RA Custom Menu", () => {
                 RaCustomMenuFound = true;
                 RaCustomMenuCompat.Init();
             }));

@@ -117,7 +117,9 @@ namespace CustomItemLib.API
         /// <inheritdoc/>
         protected virtual Pickup CreatePickup(Vector3? position = null)
         {
-            return Pickup.Create(Type, position ?? Vector3.zero);
+            var pickup = Pickup.Create(Type, position ?? Vector3.zero);
+            pickup?.Spawn();
+            return pickup;
         }
 
         /// <summary>

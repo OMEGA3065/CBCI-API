@@ -41,7 +41,7 @@ public class HeldItemModel<T> : ComponentBase<T>
 {
     private static readonly LayerMask cctvLayer = LayerMask.NameToLayer("CCTV");
     private static readonly LayerMask hitboxLayer = LayerMask.NameToLayer("Hitbox");
-    
+
     public override void SubscribeEvents(T itemInstance)
     {
         base.SubscribeEvents(itemInstance);
@@ -154,7 +154,7 @@ public class HeldItemModel<T> : ComponentBase<T>
             Logger.Debug($"Destroying schematic of {itemInstance.Namespace} resulted in a NullRefException. Possibly because the primitives were already destroyed when attempting to destroy the schematic.");
         }
     }
-    
+
     protected void OnDeselecting(PlayerChangingItemEventArgs ev, T itemInstance)
     {
         DestroyPrimitives(itemInstance);

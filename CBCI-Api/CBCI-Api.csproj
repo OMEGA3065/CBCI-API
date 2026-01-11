@@ -22,7 +22,7 @@
       <Private>false</Private>
       <Pack>false</Pack>
     </Reference>
-    <Reference Include="..\..\TestPlugin\server\SL\LabAPI\plugins\global\RaCustomMenuLabApi.dll">
+    <Reference Include="..\..\TestPlugin\server\SL\LabAPI\plugins\global\RaCustomMenu.dll">
       <Private>false</Private>
       <Pack>false</Pack>
     </Reference>
