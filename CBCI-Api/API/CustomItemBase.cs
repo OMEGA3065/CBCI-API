@@ -153,14 +153,15 @@ namespace CustomItemLib.API
             itemInstance = CreateInstance();
             if (itemInstance == null) return false;
             itemInstance.Namespace = Namespace;
-            var item = CreatePickup(position);
-            if (item == null)
+            var pickup = CreatePickup(position);
+            if (pickup == null)
             {
                 itemInstance.Destroy(true);
                 itemInstance = null;
                 return false;
             }
-            itemInstance.Serial = item.Serial;
+            pickup.Spawn();
+            itemInstance.Serial = pickup.Serial;
             return true;
         }
         
