@@ -6,7 +6,7 @@
     <DebugType>embedded</DebugType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageId>Omega3065.ComponentBasedCustomItemAPI</PackageId>
-    <Version>0.1.5</Version>
+    <Version>0.1.6</Version>
     <Authors>OMEGA3065</Authors>
     <IsPackable>true</IsPackable>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -14,19 +14,12 @@
     <RepositoryUrl>https://github.com/OMEGA3065/CBCI-API/</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
-
-    <!-- Publicize directly when referencing -->
-    <Reference Include="..\..\References\Assembly-CSharp.dll" Publicize="true" Private="false" Pack="false" />
-    <Reference Include="..\..\References\CommandSystem.Core.dll">
+    <Reference Include="Assembly-CSharp" Publicize="true" Private="false" Pack="false" />
+    <Reference Include="CommandSystem.Core">
       <Private>false</Private>
       <Pack>false</Pack>
     </Reference>
-    <Reference Include="..\..\TestPlugin\server\SL\LabAPI\plugins\global\RaCustomMenu.dll">
-      <Private>false</Private>
-      <Pack>false</Pack>
-    </Reference>
-    <Reference Include="..\..\TestPlugin\server\SL\LabAPI\plugins\global\0Harmony.dll">
+    <Reference Include="RaCustomMenu">
       <Private>false</Private>
       <Pack>false</Pack>
     </Reference>
@@ -36,32 +29,30 @@
       <Pack>false</Pack>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\References\UnityEngine.CoreModule.dll</HintPath>
       <Private>false</Private>
       <Pack>false</Pack>
     </Reference>
     <Reference Include="Mirror">
-      <HintPath>..\..\References\Mirror.dll</HintPath>
       <Private>false</Private>
       <Pack>false</Pack>
     </Reference>
     <Reference Include="Mono.Security">
-      <HintPath>..\..\References\Mono.Security.dll</HintPath>
       <Private>false</Private>
       <Pack>false</Pack>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\References\UnityEngine.PhysicsModule.dll</HintPath>
       <Private>false</Private>
       <Pack>false</Pack>
     </Reference>
     <Reference Include="NorthwoodLib">
-      <HintPath>..\..\References\NorthwoodLib.dll</HintPath>
       <Private>false</Private>
       <Pack>false</Pack>
     </Reference>
     <Reference Include="ProjectMER">
-      <HintPath>..\..\CustomReferences\ProjectMER.dll</HintPath>
+      <Private>false</Private>
+      <Pack>false</Pack>
+    </Reference>
+    <Reference Include="FilmmakerSolo">
       <Private>false</Private>
       <Pack>false</Pack>
     </Reference>
@@ -70,5 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Northwood.LabAPI" Version="1.1.4" />
+    <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
   </ItemGroup>
 </Project>
