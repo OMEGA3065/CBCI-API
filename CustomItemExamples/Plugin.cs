@@ -20,7 +20,7 @@ namespace CustomItemExamples
 
         public List<ICustomItem<object>> items;
 
-        public override Version Version => new(0, 1, 4);
+        public override Version Version => new(0, 1, 6);
         public override LoadPriority Priority => LoadPriority.Highest;
         public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
         

@@ -2,6 +2,7 @@ using System.Reflection;
 using CustomItemLib.API.Attributes;
 using CustomItemLib.Helpers;
 using InventorySystem;
+using InventorySystem.Items.Pickups;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Arguments.Scp914Events;
 using LabApi.Features.Console;
@@ -67,7 +68,7 @@ namespace CustomItemLib.API
                 }
                 return component;
             }).Where(a => a != null).ToList();
-            
+
             SubscribeEvents();
             ComponentAttributes.ForEach(c => c.InitComponent(this));
         }
@@ -80,7 +81,7 @@ namespace CustomItemLib.API
 
         /// <inheritdoc/>
         public List<ItemInstanceBase> Instances { get; } = [];
-        
+
         private T CreateInstance()
         {
             var instance = Activator.CreateInstance(typeof(T));
@@ -111,15 +112,53 @@ namespace CustomItemLib.API
         /// <inheritdoc/>
         protected virtual Item CreateItem(Player player)
         {
-            return player.AddItem(Type);
+            return CreateItem(player, 0);
         }
 
         /// <inheritdoc/>
+        protected virtual Item CreateItem(Player player, ushort itemSerial)
+        {
+            return Item.Get(player.Inventory.ServerAddItem(Type, InventorySystem.Items.ItemAddReason.AdminCommand, itemSerial));
+        }
+
         protected virtual Pickup CreatePickup(Vector3? position = null)
         {
-            var pickup = Pickup.Create(Type, position ?? Vector3.zero);
-            pickup?.Spawn();
-            return pickup;
+            return CreatePickup(position, 0);
+        }
+
+        /// <inheritdoc/>
+        protected virtual Pickup CreatePickup(Vector3? position, ushort itemSerial)
+        {
+            if (type == ItemType.None || !InventoryItemLoader.AvailableItems.TryGetValue(type, out var value))
+            {
+                return null;
+            }
+
+            ItemPickupBase itemPickupBase = InventoryExtensions.ServerCreatePickup(value, new PickupSyncInfo(type, value.Weight, itemSerial), position ?? Vector3.zero, Quaternion.identity, spawn: false);
+            return Pickup.Get(itemPickupBase);
+        }
+
+        /// <summary>
+        /// Tries to give this Item Definition's <see cref="ItemInstanceBase"/> to a specified <see cref="LabApi.Features.Wrappers.Player"/>.
+        /// </summary>
+        /// <param name="player">The <see cref="LabApi.Features.Wrappers.Player"/> to which the item will be given.</param>
+        /// <param name="itemSerial">The <see cref="ushort"/> item serial of the new.</param>
+        /// <param name="itemInstance">The created <see cref="ItemInstanceBase"/>.</param>
+        /// <returns>Whether or not the item was gives successfully.</returns>
+        public bool TryGiveItem(Player player, ushort itemSerial, out T itemInstance)
+        {
+            itemInstance = CreateInstance();
+            if (itemInstance == null) return false;
+            itemInstance.Namespace = Namespace;
+            var item = CreateItem(player, itemSerial);
+            if (item == null)
+            {
+                itemInstance.Destroy(true);
+                itemInstance = null;
+                return false;
+            }
+            itemInstance.Serial = item.Serial;
+            return true;
         }
 
         /// <summary>
@@ -130,10 +169,22 @@ namespace CustomItemLib.API
         /// <returns>Whether or not the item was gives successfully.</returns>
         public bool TryGiveItem(Player player, out T itemInstance)
         {
+            return TryGiveItem(player, 0, out itemInstance);
+        }
+
+        /// <summary>
+        /// Tries to spawn this Item Definition's <see cref="ItemInstanceBase"/> at a specified <see cref="UnityEngine.Vector3"/> position.
+        /// </summary>
+        /// <param name="position">The <see cref="UnityEngine.Vector3"/> where the item will be spawned.</param>
+        /// <param name="itemSerial">The <see cref="ushort"/> item serial of the new.</param>
+        /// <param name="itemInstance">The created <see cref="ItemInstanceBase"/>.</param>
+        /// <returns>Whether or not the item was spawned successfully.</returns>
+        public bool TrySpawn(Vector3 position, ushort itemSerial, out T itemInstance)
+        {
             itemInstance = CreateInstance();
             if (itemInstance == null) return false;
-            itemInstance.Namespace = this.Namespace;
-            var item = CreateItem(player);
+            itemInstance.Namespace = Namespace;
+            var item = CreatePickup(position, itemSerial);
             if (item == null)
             {
                 itemInstance.Destroy(true);
@@ -152,20 +203,9 @@ namespace CustomItemLib.API
         /// <returns>Whether or not the item was spawned successfully.</returns>
         public bool TrySpawn(Vector3 position, out T itemInstance)
         {
-            itemInstance = CreateInstance();
-            if (itemInstance == null) return false;
-            itemInstance.Namespace = Namespace;
-            var item = CreatePickup(position);
-            if (item == null)
-            {
-                itemInstance.Destroy(true);
-                itemInstance = null;
-                return false;
-            }
-            itemInstance.Serial = item.Serial;
-            return true;
+            return TrySpawn(position, 0, out itemInstance);
         }
-        
+
         /// <summary>
         /// Tries to spawn this Item Definition's <see cref="ItemInstanceBase"/> at a specified <see cref="UnityEngine.Vector3"/> position without creating a new <see cref="LabApi.Features.Wrappers.Pickup"/>.
         /// </summary>
@@ -207,13 +247,19 @@ namespace CustomItemLib.API
         public virtual bool Check(Item item)
         {
             if (item == null) return false;
-            return Instances.Any(i => i.Serial == item.Serial);
+            return Check(item.Serial);
         }
 
         /// <inheritdoc/>
         public virtual bool Check(Pickup pickup)
         {
-            return Instances.Any(i => i.Serial == pickup.Serial);
+            return Check(pickup.Serial);
+        }
+
+        /// <inheritdoc/>
+        public virtual bool Check(ushort itemSerial)
+        {
+            return Instances.Any(i => i.Serial == itemSerial);
         }
 
         /// <summary>
@@ -358,6 +404,12 @@ namespace CustomItemLib.API
         }
 
         /// <inheritdoc/>
+        public bool TryGiveItem(Player player, ushort itemSerial)
+        {
+            return TryGiveItem(player, itemSerial, out _);
+        }
+
+        /// <inheritdoc/>
         public bool TrySpawn(Vector3 position)
         {
             return TrySpawn(position, out _);
@@ -373,6 +425,12 @@ namespace CustomItemLib.API
         public bool TrySpawn(Vector3 position, Item item)
         {
             return TrySpawn(position, item, out _);
+        }
+
+        /// <inheritdoc/>
+        public bool TrySpawn(Vector3 position, ushort itemSerial)
+        {
+            return TrySpawn(position, itemSerial, out _);
         }
     }
 }

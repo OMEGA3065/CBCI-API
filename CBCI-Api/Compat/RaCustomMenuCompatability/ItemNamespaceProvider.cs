@@ -1,19 +1,14 @@
-using CommandSystem;
 using CustomItemLib.API;
 using CustomItemLib.Patches;
-using LabApi.Features.Console;
-using LabApi.Features.Permissions;
 using LabApi.Features.Wrappers;
-using NetworkManagerUtils.Dummies;
 using NorthwoodLib.Pools;
-using RaCustomMenu.API;
 
-namespace CustomItemLib.Compat.RaCustomMenu;
+namespace CustomItemLib.Compat.RaCustomMenuCompatability;
 
 /// <summary>
 /// Provides the RaCustomMenu functionality allowing easier giving of items.
 /// </summary>
-public class ItemNamespaceProvider : Provider
+public class ItemNamespaceProvider : RaCustomMenu.API.Provider
 {
     public override string CategoryName => "CBCI Give Item";
     public override bool IsDirty { get; } = true;
@@ -22,19 +17,21 @@ public class ItemNamespaceProvider : Provider
 
     private static void RegisterNameSpace(string pluginNamespace)
     {
-        Provider.RegisterDynamicProvider($"{pluginNamespace}", true, referenceHub =>
+        RaCustomMenu.API.Provider.RegisterDynamicProvider($"{pluginNamespace}", true, referenceHub =>
         {
-            List<DummyAction> list = [new DummyAction("<color=red>[CLOSE]</color>", () =>
+            List<RaCustomMenu.API.LimitedDummyAction> list = [new("<color=red>[CLOSE]</color>", (sender) =>
             {
-                Provider.UnregisterDynamicProvider($"{pluginNamespace}");
+                if (!sender.CheckPermission(PlayerPermissions.GivingItems)) return;
+                RaCustomMenu.API.Provider.UnregisterDynamicProvider($"{pluginNamespace}");
             })];
             foreach (var ci in CustomItemManager.items)
             {
                 if (ci.Key.PluginNamespace != pluginNamespace)
                     continue;
 
-                list.Add(new DummyAction(ci.Key.ItemIdentifier, () =>
+                list.Add(new(ci.Key.ItemIdentifier, (sender) =>
                 {
+                    if (!sender.CheckPermission(PlayerPermissions.GivingItems)) return;
                     if (!CustomItemManager.TryGetItem(ci.Key, out var item))
                     {
                         LastDummyCommandIssuer.Player.SendConsoleMessage($"Could not find an item under the namespace of {ci.Key}. Please make sure that item exists.");
@@ -46,12 +43,12 @@ public class ItemNamespaceProvider : Provider
                 }));
             }
             return list;
-        }, (sender) => sender.CheckPermission(PlayerPermissions.GivingItems));
+        });
     }
 
-    public override List<DummyAction> AddAction(ReferenceHub hub)
+    public override List<RaCustomMenu.API.LimitedDummyAction> AddActions(ReferenceHub hub)
     {
-        List<DummyAction> list = [];
+        List<RaCustomMenu.API.LimitedDummyAction> list = [];
         var foundNamespaces = HashSetPool<string>.Shared.Rent();
         foreach (var item in CustomItemManager.items)
         {
@@ -61,17 +58,14 @@ public class ItemNamespaceProvider : Provider
             foundNamespaces.Add(item.Key.PluginNamespace);
 
             list.Add(
-                new DummyAction($"{item.Key.PluginNamespace}", () =>
+                new($"{item.Key.PluginNamespace}", (sender) =>
                 {
+                    if (!sender.CheckPermission(PlayerPermissions.GivingItems)) return;
                     RegisterNameSpace(item.Key.PluginNamespace);
                 })
             );
         }
         return list;
-    }
-
-    public override bool MayExecuteThis(ICommandSender sender)
-    {
-        return sender.CheckPermission(PlayerPermissions.GivingItems);
+        // sender.CheckPermission(PlayerPermissions.GivingItems)
     }
 }

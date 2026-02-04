@@ -10,6 +10,18 @@ namespace CustomItemLib.API
     public static class CustomItemManager
     {
         /// <summary>
+        /// Used for the <see cref="CustomItemRegistryChangeEvent"/> event.
+        /// </summary>
+        /// <param name="customItem">What item was registered / unregistered.</param>
+        /// <param name="wasRegistered">Whether the item was registered (<see cref="true"/>) or unregistered (<see cref="false"/>).</param>
+        public delegate void CustomItemRegistryChangeEventHandler(ICustomItem<object> customItem, bool wasRegistered);
+
+        /// <summary>
+        /// An event invoked each time a custom item is registered or unregistered.
+        /// </summary>
+        public static event CustomItemRegistryChangeEventHandler CustomItemRegistryChangeEvent;
+
+        /// <summary>
         /// The list of all registered items.
         /// </summary>
         /// <returns>The list of all registered items according to their namespace.</returns>
@@ -27,6 +39,7 @@ namespace CustomItemLib.API
                 return false;
             var typed = item as ICustomItem<object>;
             items[item.Namespace] = typed;
+            CustomItemRegistryChangeEvent?.Invoke(typed, true);
             return true;
         }
 
@@ -38,7 +51,9 @@ namespace CustomItemLib.API
         /// <returns>Whether or not the item was unregistered successfully.</returns>
         public static bool UnregisterItem(ICustomItem<object> item)
         {
-            return items.Remove(item.Namespace);
+            if (!items.Remove(item.Namespace)) return false;
+            CustomItemRegistryChangeEvent.Invoke(item, true);
+            return true;
         }
 
         /// <summary>

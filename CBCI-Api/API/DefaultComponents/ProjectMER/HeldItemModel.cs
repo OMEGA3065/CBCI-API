@@ -101,7 +101,7 @@ public class HeldItemModel<T> : ComponentBase<T>
     protected void OnSelecting(PlayerChangingItemEventArgs ev, T itemInstance)
     {
         if (!ev.Player.IsHuman) return;
-        if (!ObjectSpawner.TrySpawnSchematic("RiotShield", new(0f, 0.5f, 0.6f), new Vector3(0f, 180f, 0f), out var shieldPrimitive))
+        if (!ObjectSpawner.TrySpawnSchematic(itemInstance.HeldItemSchematicName, new(0f, 0.5f, 0.6f), new Vector3(0f, 180f, 0f), out var shieldPrimitive))
         {
             Logger.Error("Failed to load schematic. Possibly a missing schematic (RiotShield).");
             return;
