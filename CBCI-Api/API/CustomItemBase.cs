@@ -306,9 +306,12 @@ namespace CustomItemLib.API
                 if (!Check(item))
                     continue;
 
-                Instances.RemoveAll(i => i is T typed && typed.Serial == item.Serial);
-
                 ev.Player.RemoveItem(item);
+                
+                foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.Serial))
+                {
+                    instance.Destroy(true); 
+                }
 
                 TrySpawn(ev.Player.Position, item, out _);
             }
@@ -329,7 +332,10 @@ namespace CustomItemLib.API
 
                 ev.Player.RemoveItem(item);
 
-                Instances.RemoveAll(i => i is T typed && typed.Serial == item.Serial);
+                foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.Serial))
+                {
+                    instance.Destroy(true); 
+                }
 
                 TrySpawn(ev.Player.Position, item, out _);
             }
@@ -350,7 +356,10 @@ namespace CustomItemLib.API
 
                 ev.Player.RemoveItem(item);
 
-                Instances.RemoveAll(i => i is T typed && typed.Serial == item.Serial);
+                foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.Serial))
+                {
+                    instance.Destroy(true); 
+                }
 
                 Timing.CallDelayed(1.5f, () => TrySpawn(ev.Player.Position, item, out _));
             }
@@ -371,7 +380,10 @@ namespace CustomItemLib.API
 
                 ev.Target.RemoveItem(item);
 
-                Instances.RemoveAll(i => i is T typed && typed.Serial == item.Serial);
+                foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.Serial))
+                {
+                    instance.Destroy(true); 
+                }
 
                 TrySpawn(ev.Target.Position, item, out _);
             }
