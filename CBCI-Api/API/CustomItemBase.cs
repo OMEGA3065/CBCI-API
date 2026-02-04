@@ -273,6 +273,7 @@ namespace CustomItemLib.API
             LabApi.Events.Handlers.PlayerEvents.Escaping += OnOwnerEscaping;
             LabApi.Events.Handlers.Scp914Events.ProcessingInventoryItem += OnUpgradingInventoryItem;
             LabApi.Events.Handlers.Scp914Events.ProcessingPickup += OnUpgradingPickup;
+            LabApi.Events.Handlers.ServerEvents.RoundRestarted += OnRoundRestarted;
         }
 
         /// <summary>
@@ -286,6 +287,7 @@ namespace CustomItemLib.API
             LabApi.Events.Handlers.PlayerEvents.Escaping -= OnOwnerEscaping;
             LabApi.Events.Handlers.Scp914Events.ProcessingInventoryItem -= OnUpgradingInventoryItem;
             LabApi.Events.Handlers.Scp914Events.ProcessingPickup -= OnUpgradingPickup;
+            LabApi.Events.Handlers.ServerEvents.RoundRestarted -= OnRoundRestarted;
         }
 
         /// <summary>
@@ -395,6 +397,17 @@ namespace CustomItemLib.API
                 return;
 
             ev.IsAllowed = false;
+        }
+
+        /// <summary>
+        /// Handles an event so that all <see cref="ItemInstanceBase"/> are destroyed on round end to prevent leaks.
+        /// </summary>
+        private void OnRoundRestarted()
+        {
+            foreach (var instance in Instances.ToList())
+            {
+                instance.Destroy(true);
+            }
         }
 
         /// <inheritdoc/>
