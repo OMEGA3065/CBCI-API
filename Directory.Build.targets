@@ -10,8 +10,8 @@
     </PropertyGroup>
 
     <Import Project="PluginOutputPath.props.user" Condition="Exists('PluginOutputPath.props.user')" />
-    <Target Name="CopyPluginPostBuild" AfterTargets="Build" Condition="$(ReferencePath) != ''">
-        <Message Text="Copying files to plugin output directory..." Importance="high" />
+    <Target Name="CopyPluginPostBuild" AfterTargets="RaCustomMenuBuildsRename" Condition="$(ReferencePath) != ''">
+        <Message Text="Copying files to plugin output directory... [src:$(TargetPath)] of '$(AssemblyName)'" Importance="high" />
         <Copy Condition="$(PluginOutputPath) != ''"
               SourceFiles="$(TargetPath)"
               DestinationFolder="$(PluginOutputPath)"
@@ -50,14 +50,24 @@
     </Target>
     <Target Name="RaCustomMenuBuilds" AfterTargets="Build" Condition="'$(IsRaCustomMenuBuild)' == '' and '$(AssemblyName)' == 'CBCI-Api'">
         <MSBuild Projects="$(MSBuildProjectFile)"
-                 Properties="IsRaCustomMenuBuild=true;Configuration=$(Configuration);AssemblyName=$(AssemblyName)_RaCustomMenu"
+                 Properties="IsRaCustomMenuBuild=true;Configuration=$(Configuration);OutputPath=$(TargetDir)RaCustomMenu"
                  Targets="Build"/>
-        <MSBuild Projects="$(MSBuildProjectFile)"
-                 Properties="IsRaCustomMenuBuild=false;Configuration=$(Configuration)"
-                 Targets="Build"/>
+<!--        <MSBuild Projects="$(MSBuildProjectFile)"-->
+<!--                 Properties="IsRaCustomMenuBuild=false;Configuration=$(Configuration)"-->
+<!--                 Targets="Build"/>-->
 
         <PropertyGroup>
             <SkipBuild>true</SkipBuild>
+        </PropertyGroup>
+    </Target>
+    <Target Name="RaCustomMenuBuildsRename" AfterTargets="PostBuildEvent" Condition="'$(IsRaCustomMenuBuild)' == 'true'">
+        <PropertyGroup>
+            <TargetName>$(TargetName)_RaCustomMenu</TargetName>
+        </PropertyGroup>
+        <Message Text="Renaming Secondary... [$(TargetName)]" Importance="high"/>
+        <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(TargetDir)$(TargetName)$(TargetExt)" />
+        <PropertyGroup>
+            <TargetPath>$(TargetDir)$(TargetName)$(TargetExt)</TargetPath>
         </PropertyGroup>
     </Target>
 </Project>

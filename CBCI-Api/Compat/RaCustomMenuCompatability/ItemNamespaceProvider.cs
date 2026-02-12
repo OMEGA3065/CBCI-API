@@ -1,5 +1,6 @@
 using CustomItemLib.API;
 using CustomItemLib.Patches;
+using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
 using NorthwoodLib.Pools;
 
@@ -34,12 +35,12 @@ public class ItemNamespaceProvider : RaCustomMenu.API.Provider
                     if (!sender.CheckPermission(PlayerPermissions.GivingItems)) return;
                     if (!CustomItemManager.TryGetItem(ci.Key, out var item))
                     {
-                        LastDummyCommandIssuer.Player.SendConsoleMessage($"Could not find an item under the namespace of {ci.Key}. Please make sure that item exists.");
+                        Player.Get(sender)!.SendConsoleMessage($"Could not find an item under the namespace of {ci.Key}. Please make sure that item exists.");
                         return;
                     }
                     int count = 0;
                     if (item.TryGiveItem(Player.Get(referenceHub))) count++;
-                    LastDummyCommandIssuer.Player.SendConsoleMessage($"Item ({ci.Key}) has been given to a player!");
+                    Player.Get(sender)!.SendConsoleMessage($"Item ({ci.Key}) has been given to a player!");
                 }));
             }
             return list;

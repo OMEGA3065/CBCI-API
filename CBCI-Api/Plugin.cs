@@ -35,7 +35,7 @@ namespace CustomItemLib
             _harmony = new Harmony("omega3065.custom_item_lib");
             _harmony.PatchAll();
 
-#if IsRaCustomMenuBuild
+#if IsRaCustomMenuBuild == false
             Compat.RaCustomMenuCompat.Init();
 #endif
         }
