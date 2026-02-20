@@ -2,6 +2,7 @@ using System.Reflection;
 using CustomItemLib.API.Attributes;
 using CustomItemLib.Helpers;
 using InventorySystem;
+using InventorySystem.Items;
 using InventorySystem.Items.Pickups;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Arguments.Scp914Events;
@@ -129,12 +130,12 @@ namespace CustomItemLib.API
         /// <inheritdoc/>
         protected virtual Pickup CreatePickup(Vector3? position, ushort itemSerial)
         {
-            if (type == ItemType.None || !InventoryItemLoader.AvailableItems.TryGetValue(type, out var value))
+            if (Type == ItemType.None || !InventoryItemLoader.AvailableItems.TryGetValue(Type, out var value))
             {
                 return null;
             }
 
-            ItemPickupBase itemPickupBase = InventoryExtensions.ServerCreatePickup(value, new PickupSyncInfo(type, value.Weight, itemSerial), position ?? Vector3.zero, Quaternion.identity, spawn: false);
+            ItemPickupBase itemPickupBase = InventoryExtensions.ServerCreatePickup(value, new PickupSyncInfo(Type, value.Weight, itemSerial == 0 ? ItemSerialGenerator.GenerateNext() : itemSerial), position ?? Vector3.zero, Quaternion.identity, spawn: false);
             return Pickup.Get(itemPickupBase);
         }
 
@@ -192,6 +193,7 @@ namespace CustomItemLib.API
                 return false;
             }
             itemInstance.Serial = item.Serial;
+            item.Spawn();
             return true;
         }
 

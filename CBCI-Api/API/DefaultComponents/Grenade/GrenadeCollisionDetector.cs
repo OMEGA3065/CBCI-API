@@ -12,9 +12,14 @@ namespace CustomItemLib.API.DefaultComponents;
 public class CollisionDetector : MonoBehaviour
 {
     /// <summary>
-    /// Method exucted once a collision is detected.
+    /// Method executed once a collision is detected.
     /// </summary>
     Action CollisionAction = null;
+    
+    /// <summary>
+    /// Method executed once a collision is detected.
+    /// </summary>
+    Action<GameObject> CollisionActionReferenced = null;
 
     /// <summary>
     /// An object, collisions with which are all ignored.
@@ -32,12 +37,21 @@ public class CollisionDetector : MonoBehaviour
         CollisionAction = collisionAction;
         IgnoredObject = ignoredObject;
     }
+    
+    /// <summary>
+    /// Sets up this <see cref="CollisionDetector"/>.
+    /// </summary>
+    public void Init(Action<GameObject> collisionAction, GameObject ignoredObject = null)
+    {
+        CollisionActionReferenced = collisionAction;
+        IgnoredObject = ignoredObject;
+    }
 
     public void OnCollisionEnter(Collision collision)
     {
         if (CollisionActive)
             return;
-        if (CollisionAction is null)
+        if (CollisionAction is null && CollisionActionReferenced is null)
             return;
         if (IgnoredObject is not null && collision?.collider?.gameObject == IgnoredObject)
             return;
@@ -45,7 +59,8 @@ public class CollisionDetector : MonoBehaviour
             return;
 
         CollisionActive = true;
-        CollisionAction();
+        CollisionAction?.Invoke();
+        CollisionActionReferenced?.Invoke(collision.collider.gameObject);
     }
     
     public void OnCollisionExit(Collision collision)
