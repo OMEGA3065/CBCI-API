@@ -18,6 +18,9 @@ public class ItemNamespaceProvider : RaCustomMenu.API.Provider
 
     private static void RegisterNameSpace(string pluginNamespace)
     {
+        if (RaCustomMenu.API.Provider.providersLoaded.Any(p => p.CategoryName == pluginNamespace))
+            return;
+        
         RaCustomMenu.API.Provider.RegisterDynamicProvider($"{pluginNamespace}", true, referenceHub =>
         {
             List<RaCustomMenu.API.LimitedDummyAction> list = [new("<color=red>[CLOSE]</color>", (sender) =>
