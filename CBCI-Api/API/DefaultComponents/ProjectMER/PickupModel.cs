@@ -32,13 +32,13 @@ public class PickupModel<T> : ComponentBase<T>
     public override void SubscribeEvents(T itemInstance)
     {
         base.SubscribeEvents(itemInstance);
-        ItemPickupBase.OnPickupAdded += (ev) => OnPickupAdded(ev, itemInstance);
+        ItemPickupBase.OnPickupAdded += GetEvent<ItemPickupBase>(itemInstance, OnPickupAdded, "pickupAdded");
     }
 
     public override void UnsubscribeEvents(T itemInstance)
     {
         base.UnsubscribeEvents(itemInstance);
-        ItemPickupBase.OnPickupAdded -= (ev) => OnPickupAdded(ev, itemInstance);
+        ItemPickupBase.OnPickupAdded -= GetEvent<ItemPickupBase>(itemInstance, OnPickupAdded, "pickupAdded");
     }
 
     private void OnPickupAdded(ItemPickupBase ev, T itemInstance)

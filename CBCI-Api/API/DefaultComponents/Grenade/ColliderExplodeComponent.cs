@@ -15,14 +15,14 @@ public class ColliderExplodeComponent<T> : ComponentBase<T>
     public override void SubscribeEvents(T itemInstance)
     {
         base.SubscribeEvents(itemInstance);
-        LabApi.Events.Handlers.PlayerEvents.ThrewProjectile += (ev) => OnOwnerThrewProjectile(ev, itemInstance);
+        LabApi.Events.Handlers.PlayerEvents.ThrewProjectile += GetLabEvent<PlayerThrewProjectileEventArgs>(itemInstance, OnOwnerThrewProjectile, "threwProjectile");
     }
 
     /// <inheritdoc/>
     public override void UnsubscribeEvents(T itemInstance)
     {
         base.UnsubscribeEvents(itemInstance);
-        LabApi.Events.Handlers.PlayerEvents.ThrewProjectile -= (ev) => OnOwnerThrewProjectile(ev, itemInstance);
+        LabApi.Events.Handlers.PlayerEvents.ThrewProjectile -= GetLabEvent<PlayerThrewProjectileEventArgs>(itemInstance, OnOwnerThrewProjectile, "threwProjectile");
     }
 
     protected virtual void OnOwnerThrewProjectile(PlayerThrewProjectileEventArgs ev, T itemInstance)

@@ -28,16 +28,16 @@ public class ItemLightComponent<T> : ComponentBase<T>
     public override void SubscribeEvents(T itemInstance)
     {
         base.SubscribeEvents(itemInstance);
-        ItemPickupBase.OnPickupAdded += (pickup) => OnPickupCreated(pickup, itemInstance);
-        ItemPickupBase.OnPickupDestroyed += (pickup) => OnPickupDestroyed(pickup, itemInstance);
+        ItemPickupBase.OnPickupAdded += GetEvent<ItemPickupBase>(itemInstance, OnPickupCreated, "pickupAdded");
+        ItemPickupBase.OnPickupDestroyed += GetEvent<ItemPickupBase>(itemInstance, OnPickupDestroyed, "pickupDestroyed");
     }
 
     /// <inheritdoc/>
     public override void UnsubscribeEvents(T itemInstance)
     {
         base.UnsubscribeEvents(itemInstance);
-        ItemPickupBase.OnPickupAdded -= (pickup) => OnPickupCreated(pickup, itemInstance);
-        ItemPickupBase.OnPickupDestroyed -= (pickup) => OnPickupDestroyed(pickup, itemInstance);
+        ItemPickupBase.OnPickupAdded -= GetEvent<ItemPickupBase>(itemInstance, OnPickupCreated, "pickupAdded");
+        ItemPickupBase.OnPickupDestroyed -= GetEvent<ItemPickupBase>(itemInstance, OnPickupDestroyed, "pickupDestroyed");
     }
 
     protected virtual void OnPickupDestroyed(ItemPickupBase pickup, T itemInstance)

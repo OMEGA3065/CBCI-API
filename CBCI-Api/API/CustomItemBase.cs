@@ -269,10 +269,7 @@ namespace CustomItemLib.API
         /// </summary>
         public virtual void SubscribeEvents()
         {
-            LabApi.Events.Handlers.PlayerEvents.ChangingRole += OnOwnerChangingRole;
-            LabApi.Events.Handlers.PlayerEvents.Dying += OnOwnerDying;
-            LabApi.Events.Handlers.PlayerEvents.Cuffing += OnOwnerCuffing;
-            LabApi.Events.Handlers.PlayerEvents.Escaping += OnOwnerEscaping;
+            InventoryExtensions.OnItemRemoved += OnOwnerItemRemoved;
             LabApi.Events.Handlers.Scp914Events.ProcessingInventoryItem += OnUpgradingInventoryItem;
             LabApi.Events.Handlers.Scp914Events.ProcessingPickup += OnUpgradingPickup;
             LabApi.Events.Handlers.ServerEvents.RoundRestarted += OnRoundRestarted;
@@ -283,111 +280,27 @@ namespace CustomItemLib.API
         /// </summary>
         public virtual void UnsubscribeEvents()
         {
-            LabApi.Events.Handlers.PlayerEvents.ChangingRole -= OnOwnerChangingRole;
-            LabApi.Events.Handlers.PlayerEvents.Dying -= OnOwnerDying;
-            LabApi.Events.Handlers.PlayerEvents.Cuffing -= OnOwnerCuffing;
-            LabApi.Events.Handlers.PlayerEvents.Escaping -= OnOwnerEscaping;
+            InventoryExtensions.OnItemRemoved -= OnOwnerItemRemoved;
             LabApi.Events.Handlers.Scp914Events.ProcessingInventoryItem -= OnUpgradingInventoryItem;
             LabApi.Events.Handlers.Scp914Events.ProcessingPickup -= OnUpgradingPickup;
             LabApi.Events.Handlers.ServerEvents.RoundRestarted -= OnRoundRestarted;
         }
 
-        /// <summary>
-        /// Handles an event so that an <see cref="ItemInstanceBase"/> isn't lost.
-        /// </summary>
-        private void OnOwnerChangingRole(PlayerChangingRoleEventArgs ev)
+        private void OnOwnerItemRemoved(ReferenceHub hub, ItemBase item, ItemPickupBase pickup)
         {
-            if (!ev.IsAllowed) return;
-            if (ev.ChangeReason is RoleChangeReason.Escaped or RoleChangeReason.Destroyed or RoleChangeReason.LateJoin)
+            if (!Check(item.ItemSerial)) return;
+            if (pickup != null)
+            {
+                foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.ItemSerial))
+                {
+                    instance.Serial = pickup.Info.Serial;
+                }
+
                 return;
-
-            List<Item> itemsCopy = [];
-            ev.Player.Items.CopyTo(itemsCopy);
-            foreach (Item item in itemsCopy)
-            {
-                if (!Check(item))
-                    continue;
-
-                ev.Player.RemoveItem(item);
-                
-                foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.Serial))
-                {
-                    instance.Destroy(true); 
-                }
-
-                TrySpawn(ev.Player.Position, item, out _);
             }
-        }
-
-        /// <summary>
-        /// Handles an event so that an <see cref="ItemInstanceBase"/> isn't lost.
-        /// </summary>
-        private void OnOwnerDying(PlayerDyingEventArgs ev)
-        {
-            if (!ev.IsAllowed) return;
-            List<Item> itemsCopy = [];
-            ev.Player.Items.CopyTo(itemsCopy);
-            foreach (Item item in itemsCopy)
+            foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.ItemSerial))
             {
-                if (!Check(item))
-                    continue;
-
-                ev.Player.RemoveItem(item);
-
-                foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.Serial))
-                {
-                    instance.Destroy(true); 
-                }
-
-                TrySpawn(ev.Player.Position, item, out _);
-            }
-        }
-
-        /// <summary>
-        /// Handles an event so that an <see cref="ItemInstanceBase"/> isn't lost.
-        /// </summary>
-        private void OnOwnerEscaping(PlayerEscapingEventArgs ev)
-        {
-            if (!ev.IsAllowed) return;
-            List<Item> itemsCopy = [];
-            ev.Player.Items.CopyTo(itemsCopy);
-            foreach (Item item in itemsCopy)
-            {
-                if (!Check(item))
-                    continue;
-
-                ev.Player.RemoveItem(item);
-
-                foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.Serial))
-                {
-                    instance.Destroy(true); 
-                }
-
-                Timing.CallDelayed(1.5f, () => TrySpawn(ev.Player.Position, item, out _));
-            }
-        }
-
-        /// <summary>
-        /// Handles an event so that an <see cref="ItemInstanceBase"/> isn't lost.
-        /// </summary>
-        private void OnOwnerCuffing(PlayerCuffingEventArgs ev)
-        {
-            if (!ev.IsAllowed) return;
-            List<Item> itemsCopy = [];
-            ev.Player.Items.CopyTo(itemsCopy);
-            foreach (Item item in itemsCopy)
-            {
-                if (!Check(item))
-                    continue;
-
-                ev.Target.RemoveItem(item);
-
-                foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.Serial))
-                {
-                    instance.Destroy(true); 
-                }
-
-                TrySpawn(ev.Target.Position, item, out _);
+                instance.Destroy(true);
             }
         }
 

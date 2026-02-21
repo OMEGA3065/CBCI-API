@@ -13,14 +13,14 @@ public class ItemSelectionHintComponent<T> : ComponentBase<T>
     public override void SubscribeEvents(T itemInstance)
     {
         base.SubscribeEvents(itemInstance);
-        LabApi.Events.Handlers.PlayerEvents.ChangedItem += (ev) => OnOwnerChangedItem(ev, itemInstance);
+        LabApi.Events.Handlers.PlayerEvents.ChangedItem += GetLabEvent<PlayerChangedItemEventArgs>(itemInstance, OnOwnerChangedItem, "ownerChangedItem");
     }
 
     /// <inheritdoc/>
     public override void UnsubscribeEvents(T itemInstance)
     {
         base.UnsubscribeEvents(itemInstance);
-        LabApi.Events.Handlers.PlayerEvents.ChangedItem -= (ev) => OnOwnerChangedItem(ev, itemInstance);
+        LabApi.Events.Handlers.PlayerEvents.ChangedItem -= GetLabEvent<PlayerChangedItemEventArgs>(itemInstance, OnOwnerChangedItem, "ownerChangedItem");
     }
 
     protected void OnOwnerChangedItem(PlayerChangedItemEventArgs ev, T itemInstance)

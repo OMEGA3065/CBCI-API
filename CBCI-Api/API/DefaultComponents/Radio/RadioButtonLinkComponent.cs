@@ -26,15 +26,15 @@ public class RadioButtonLinkComponent<T> : ComponentBase<T>
     public override void SubscribeEvents(T itemInstance)
     {
         base.SubscribeEvents(itemInstance);
-        LabApi.Events.Handlers.PlayerEvents.ChangingRadioRange += (ev) => OnChangingRange(ev, itemInstance);
-        LabApi.Events.Handlers.PlayerEvents.TogglingRadio += (ev) => OnToggling(ev, itemInstance);
+        LabApi.Events.Handlers.PlayerEvents.ChangingRadioRange += GetLabEvent<PlayerChangingRadioRangeEventArgs>(itemInstance, OnChangingRange, "changingRange");
+        LabApi.Events.Handlers.PlayerEvents.TogglingRadio += GetLabEvent<PlayerTogglingRadioEventArgs>(itemInstance, OnToggling, "togglingRadio");
     }
 
     public override void UnsubscribeEvents(T itemInstance)
     {
         base.UnsubscribeEvents(itemInstance);
-        LabApi.Events.Handlers.PlayerEvents.ChangingRadioRange -= (ev) => OnChangingRange(ev, itemInstance);
-        LabApi.Events.Handlers.PlayerEvents.TogglingRadio -= (ev) => OnToggling(ev, itemInstance);
+        LabApi.Events.Handlers.PlayerEvents.ChangingRadioRange -= GetLabEvent<PlayerChangingRadioRangeEventArgs>(itemInstance, OnChangingRange, "changingRange");
+        LabApi.Events.Handlers.PlayerEvents.TogglingRadio -= GetLabEvent<PlayerTogglingRadioEventArgs>(itemInstance, OnToggling, "togglingRadio");
     }
 
     private void OnChangingRange(PlayerChangingRadioRangeEventArgs ev, T itemInstance)

@@ -28,9 +28,15 @@ namespace CustomItemLib.API
         public ushort Serial { get; set; }
 
         /// <summary>
+        /// The internal Custom Item Instance ID for this object.
+        /// </summary>
+        /// <value>The Instance ID.</value>
+        public ushort InstanceId { get; set; } = GetNextInstanceId();
+
+        /// <summary>
         /// Destroys this <see cref="ItemInstanceBase"/>.
         /// </summary>
-        /// <param name="force">Whether or not to bypass any decision made by this <see cref="ItemInstanceBase"/>'s Item Definition's components.</param>
+        /// <param name="force">Whether to bypass any decision made by this <see cref="ItemInstanceBase"/>'s Item Definition's components.</param>
         public void Destroy(bool force)
         {
             if (CustomItemManager.TryGetItem(Namespace, out var customItem))
@@ -52,7 +58,7 @@ namespace CustomItemLib.API
             NetworkServer.Destroy(item.GameObject);
         }
         /// <summary>
-        /// Checks whether or not a item / pickup serial matches this <see cref="ItemInstanceBase"/>'s serial.
+        /// Checks whether an item / pickup serial matches this <see cref="ItemInstanceBase"/>'s serial.
         /// </summary>
         /// <param name="serial"></param>
         /// <returns></returns>
@@ -62,31 +68,62 @@ namespace CustomItemLib.API
         }
 
         /// <summary>
-        /// Checks whether or not a <see cref="LabApi.Features.Wrappers.Item"/> matches this <see cref="ItemInstanceBase"/>'s serial.
+        /// Checks whether a <see cref="LabApi.Features.Wrappers.Item"/> matches this <see cref="ItemInstanceBase"/>'s serial.
         /// </summary>
-        /// <param name="serial"></param>
+        /// <param name="item"></param>
         /// <returns></returns>
         public bool Check(Item item) => Check(item.Serial);
         
         /// <summary>
-        /// Checks whether or not a <see cref="LabApi.Features.Wrappers.Pickup"/> matches this <see cref="ItemInstanceBase"/>'s serial.
+        /// Checks whether a <see cref="LabApi.Features.Wrappers.Pickup"/> matches this <see cref="ItemInstanceBase"/>'s serial.
         /// </summary>
-        /// <param name="serial"></param>
+        /// <param name="item"></param>
         /// <returns></returns>
         public bool Check(Pickup item) => Check(item.Serial);
         
         /// <summary>
-        /// Checks whether or not a <see cref="ItemBase"/> matches this <see cref="ItemInstanceBase"/>'s serial.
+        /// Checks whether a <see cref="ItemBase"/> matches this <see cref="ItemInstanceBase"/>'s serial.
         /// </summary>
-        /// <param name="serial"></param>
+        /// <param name="item"></param>
         /// <returns></returns>
         public bool Check(ItemBase item) => Check(item.ItemSerial);
         
         /// <summary>
-        /// Checks whether or not a <see cref="ItemPickupBase"/> matches this <see cref="ItemInstanceBase"/>'s serial.
+        /// Checks whether a <see cref="ItemPickupBase"/> matches this <see cref="ItemInstanceBase"/>'s serial.
         /// </summary>
-        /// <param name="serial"></param>
+        /// <param name="item"></param>
         /// <returns></returns>
         public bool Check(ItemPickupBase item) => Check(item.Info.Serial);
+
+        protected bool Equals(ItemInstanceBase other)
+        {
+            return Serial == other.Serial || InstanceId == other.InstanceId;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((ItemInstanceBase)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            // ReSharper disable once NonReadonlyMemberInGetHashCode
+            return InstanceId.GetHashCode();
+        }
+
+        private static ushort _lastInstanceId = 0;
+
+        public static ushort GetNextInstanceId()
+        {
+            return ++_lastInstanceId;
+        }
+        
+        public static void ResetInstanceCounter(ushort newCount = 0)
+        {
+            _lastInstanceId = newCount;
+        }
     }
 }

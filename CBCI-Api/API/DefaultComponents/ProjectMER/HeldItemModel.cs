@@ -45,15 +45,15 @@ public class HeldItemModel<T> : ComponentBase<T>
     public override void SubscribeEvents(T itemInstance)
     {
         base.SubscribeEvents(itemInstance);
-        LabApi.Events.Handlers.PlayerEvents.ChangingItem += (ev) => OnInternalChangingItem(ev, itemInstance);
-        ItemBase.OnItemRemoved += (ev) => ItemRemovalCleanup(ev, itemInstance);
+        LabApi.Events.Handlers.PlayerEvents.ChangingItem += GetLabEvent<PlayerChangingItemEventArgs>(itemInstance, OnInternalChangingItem, "changingItem");
+        ItemBase.OnItemRemoved += GetEvent<ItemBase>(itemInstance, ItemRemovalCleanup, "itemRemovalCleanup");
     }
 
     public override void UnsubscribeEvents(T itemInstance)
     {
         base.UnsubscribeEvents(itemInstance);
-        LabApi.Events.Handlers.PlayerEvents.ChangingItem -= (ev) => OnInternalChangingItem(ev, itemInstance);
-        ItemBase.OnItemRemoved -= (ev) => ItemRemovalCleanup(ev, itemInstance);
+        LabApi.Events.Handlers.PlayerEvents.ChangingItem -= GetLabEvent<PlayerChangingItemEventArgs>(itemInstance, OnInternalChangingItem, "changingItem");
+        ItemBase.OnItemRemoved -= GetEvent<ItemBase>(itemInstance, ItemRemovalCleanup, "itemRemovalCleanup");
     }
 
     // private void AddHealth(Item item, float health)

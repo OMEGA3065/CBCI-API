@@ -22,13 +22,13 @@ public class ExplosionActionComponent<T> : ComponentBase<T>
     public override void SubscribeEvents(T itemInstance)
     {
         base.SubscribeEvents(itemInstance);
-        LabApi.Events.Handlers.ServerEvents.ProjectileExploding += (ev) => OnExploding(ev, itemInstance);
+        LabApi.Events.Handlers.ServerEvents.ProjectileExploding += GetLabEvent<ProjectileExplodingEventArgs>(itemInstance, OnExploding, "explodingProjectile");
     }
 
     public override void UnsubscribeEvents(T itemInstance)
     {
         base.UnsubscribeEvents(itemInstance);
-        LabApi.Events.Handlers.ServerEvents.ProjectileExploding -= (ev) => OnExploding(ev, itemInstance);
+        LabApi.Events.Handlers.ServerEvents.ProjectileExploding -= GetLabEvent<ProjectileExplodingEventArgs>(itemInstance, OnExploding, "explodingProjectile");
     }
 
     private void OnExploding(ProjectileExplodingEventArgs ev, T itemInstance)

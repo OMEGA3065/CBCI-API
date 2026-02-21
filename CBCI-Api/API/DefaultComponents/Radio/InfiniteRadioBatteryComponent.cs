@@ -16,13 +16,13 @@ public class InfiniteRadioBatteryComponent<T> : ComponentBase<T>
     public override void SubscribeEvents(T itemInstance)
     {
         base.SubscribeEvents(itemInstance);
-        LabApi.Events.Handlers.PlayerEvents.UsingRadio += (ev) => OnUsingRadio(ev, itemInstance);
+        LabApi.Events.Handlers.PlayerEvents.UsingRadio += GetLabEvent<PlayerUsingRadioEventArgs>(itemInstance, OnUsingRadio, "usingRadio");
     }
 
     public override void UnsubscribeEvents(T itemInstance)
     {
         base.UnsubscribeEvents(itemInstance);
-        LabApi.Events.Handlers.PlayerEvents.UsingRadio -= (ev) => OnUsingRadio(ev, itemInstance);
+        LabApi.Events.Handlers.PlayerEvents.UsingRadio -= GetLabEvent<PlayerUsingRadioEventArgs>(itemInstance, OnUsingRadio, "usingRadio");
     }
 
     private void OnUsingRadio(PlayerUsingRadioEventArgs ev, T itemInstance)
