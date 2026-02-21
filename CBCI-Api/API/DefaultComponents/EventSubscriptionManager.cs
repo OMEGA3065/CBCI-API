@@ -14,10 +14,8 @@ public class EventSubscriptionManager<T>(T item)
     
     public Action<TEvent> GetOrCreate<TEvent>(string type, SubscriptionDelegate<TEvent> method)
     {
-        if (_subscriptions.TryGetValue(type, out var uncast)
-            )
+        if (_subscriptions.TryGetValue(type, out var uncast))
         {
-            Logger.Info($"Got an action event of {typeof(TEvent).Name} {uncast.GetType().Name}");
             if (uncast is Action<TEvent> m)
                 return m;
         }
@@ -27,7 +25,6 @@ public class EventSubscriptionManager<T>(T item)
             method(ev, ItemInstance);
         };
         _subscriptions[type] = handler;
-        Logger.Info($"CREATE an event of {typeof(TEvent).Name}");
         
         return handler;
     }
@@ -36,7 +33,6 @@ public class EventSubscriptionManager<T>(T item)
     {
         if (_subscriptions.TryGetValue(type, out var uncast))
         {
-            Logger.Info($"Got an action event of null {uncast.GetType().Name}");
             if (uncast is Action m)
                 return m;
         }
@@ -46,7 +42,6 @@ public class EventSubscriptionManager<T>(T item)
             method(ItemInstance);
         };
         _subscriptions[type] = handler;
-        Logger.Info($"CREATE an event of null");
         
         return handler;
     }
@@ -56,7 +51,6 @@ public class EventSubscriptionManager<T>(T item)
     {
         if (_subscriptions.TryGetValue(type, out var uncast))
         {
-            Logger.Info($"Got a labHandler event of {typeof(TEvent).Name} {uncast.GetType().Name}");
             if (uncast is LabEventHandler<TEvent> m)
                 return m;
         }
@@ -66,7 +60,6 @@ public class EventSubscriptionManager<T>(T item)
             method(ev, ItemInstance);
         };
         _subscriptions[type] = handler;
-        Logger.Info($"CREATE a labHandler event of {typeof(TEvent).Name}");
         
         return handler;
     }
@@ -75,7 +68,6 @@ public class EventSubscriptionManager<T>(T item)
     {
         if (_subscriptions.TryGetValue(type, out var uncast))
         {
-            Logger.Info($"Got a labHandler event of null {uncast.GetType().Name}");
             if (uncast is LabEventHandler m)
                 return m;
         }
@@ -85,7 +77,6 @@ public class EventSubscriptionManager<T>(T item)
             method(ItemInstance);
         };
         _subscriptions[type] = handler;
-        Logger.Info($"CREATE a labHandler event of null");
         
         return handler;
     }
