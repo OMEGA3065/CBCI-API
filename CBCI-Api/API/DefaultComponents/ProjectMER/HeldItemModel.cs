@@ -2,6 +2,7 @@ using System;
 using AdminToys;
 using CustomItemLib.API;
 using CustomItemLib.API.DefaultComponents;
+using CustomPlayerEffects;
 using InventorySystem.Items;
 using InventorySystem.Items.Pickups;
 using LabApi.Events.Arguments.PlayerEvents;
@@ -54,6 +55,12 @@ public class HeldItemModel<T> : ComponentBase<T>
         base.UnsubscribeEvents(itemInstance);
         LabApi.Events.Handlers.PlayerEvents.ChangingItem -= GetLabEvent<PlayerChangingItemEventArgs>(itemInstance, OnInternalChangingItem, "changingItem");
         ItemBase.OnItemRemoved -= GetEvent<ItemBase>(itemInstance, ItemRemovalCleanup, "itemRemovalCleanup");
+    }
+
+    public override void OnDestroyedInstance(T itemInstance)
+    {
+        base.OnDestroyedInstance(itemInstance);
+        DestroyPrimitives(itemInstance);
     }
 
     // private void AddHealth(Item item, float health)
