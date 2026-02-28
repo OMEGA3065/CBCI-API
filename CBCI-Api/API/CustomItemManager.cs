@@ -52,7 +52,7 @@ namespace CustomItemLib.API
         public static bool UnregisterItem(ICustomItem<object> item)
         {
             if (!items.Remove(item.Namespace)) return false;
-            CustomItemRegistryChangeEvent.Invoke(item, true);
+            CustomItemRegistryChangeEvent?.Invoke(item, true);
             return true;
         }
 
