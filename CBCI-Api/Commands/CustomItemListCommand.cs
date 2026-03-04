@@ -23,6 +23,12 @@ namespace CustomItemLib.Commands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
+            if (!sender.CheckPermission(PlayerPermissions.GivingItems))
+            {
+                response = "You don't have the required permission to use this command.";
+                return false;
+            }
+
             if (arguments.Count == 1)
             {
                 string targetPluginSpace = arguments.First();

@@ -29,7 +29,7 @@ namespace CustomItemLib.Commands
 
         protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission([PlayerPermissions.GivingItems]))
+            if (!sender.CheckPermission(PlayerPermissions.GivingItems))
             {
                 response = "You don't have the required permission to use this command.";
                 return false;
