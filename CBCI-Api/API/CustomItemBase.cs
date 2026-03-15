@@ -374,7 +374,7 @@ namespace CustomItemLib.API
         {
             if (!ev.IsAllowed) return;
             List<Item> itemsCopy = [];
-            ev.Player.Items.CopyTo(itemsCopy);
+            ev.Target.Items.CopyTo(itemsCopy);
             foreach (Item item in itemsCopy)
             {
                 if (!Check(item))
