@@ -110,7 +110,7 @@ public class HeldItemModel<T> : ComponentBase<T>
         if (!ev.Player.IsHuman) return;
         if (!ObjectSpawner.TrySpawnSchematic(itemInstance.HeldItemSchematicName, new(0f, 0.5f, 0.6f), new Vector3(0f, 180f, 0f), out var shieldPrimitive))
         {
-            Logger.Error("Failed to load schematic. Possibly a missing schematic (RiotShield).");
+            Logger.Error($"Failed to load schematic. Possibly a missing schematic ({itemInstance.HeldItemSchematicName}).");
             return;
         }
         shieldPrimitive.transform.SetParent(ev.Player.GameObject.transform, false);
