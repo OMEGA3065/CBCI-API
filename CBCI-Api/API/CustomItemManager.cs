@@ -132,7 +132,7 @@ namespace CustomItemLib.API
         public static IEnumerable<ICustomItem<object>> UnregisterAllItems(Assembly assembly)
         {
             IEnumerable<ICustomItem<object>> unregisteredItems = [];
-            foreach (var item in items.Values)
+            foreach (var item in items.Values.ToArray())
             {
                 if (item.GetType().Assembly != assembly) continue;
                 if (UnregisterItem(item))
