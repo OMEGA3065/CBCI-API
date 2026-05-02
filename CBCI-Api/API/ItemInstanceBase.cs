@@ -1,3 +1,4 @@
+using InventorySystem;
 using InventorySystem.Items;
 using InventorySystem.Items.Pickups;
 using LabApi.Features.Wrappers;
@@ -46,16 +47,10 @@ namespace CustomItemLib.API
                     return;
                 }
             }
-            if (!Item.TryGet(Serial, out var item))
-            {
-                if (!Pickup.TryGet(Serial, out var pickup))
-                {
-                    return;
-                }
+            if (Item.TryGet(Serial, out var item))
+                item.CurrentOwner?.RemoveItem(item);
+            if (Pickup.TryGet(Serial, out var pickup))
                 pickup.Destroy();
-                return;
-            }
-            NetworkServer.Destroy(item.GameObject);
         }
         /// <summary>
         /// Checks whether an item / pickup serial matches this <see cref="ItemInstanceBase"/>'s serial.
