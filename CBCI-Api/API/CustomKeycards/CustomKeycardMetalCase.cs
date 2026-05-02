@@ -68,15 +68,11 @@ namespace CustomItemLib.API.CustomKeycards
         public virtual byte WearLevel => 0;
 
         /// <inheritdoc/>
-        protected override Item CreateItem(Player player)
-        {
-            return KeycardItem.CreateCustomKeycardMetal(player, KeycardName, KeycardHolder, Label, KeycardPermissions, KeycardColor, PermissionColor, LabelColor, WearLevel, SerialLabel);
-        }
-
+        protected override Item CreateItem(Player player, ushort itemSerial)
+            => KeycardItem.CreateCustomKeycardMetal(player, KeycardName, KeycardHolder, Label, KeycardPermissions, KeycardColor, PermissionColor, LabelColor, WearLevel, SerialLabel);
+        
         /// <inheritdoc/>
         protected override Pickup CreatePickup(Vector3? position = null)
-        {
-            return KeycardItem.CreateCustomKeycardMetal(Player.Host, KeycardName, KeycardHolder, Label, KeycardPermissions, KeycardColor, PermissionColor, LabelColor, WearLevel, SerialLabel).DropItem();
-        }
+            => KeycardItem.CreateCustomKeycardMetal(Player.Host!, KeycardName, KeycardHolder, Label, KeycardPermissions, KeycardColor, PermissionColor, LabelColor, WearLevel, SerialLabel)!.DropItem();
     }
 }

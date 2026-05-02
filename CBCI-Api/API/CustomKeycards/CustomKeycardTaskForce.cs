@@ -57,15 +57,11 @@ namespace CustomItemLib.API.CustomKeycards
         public virtual int RankIndex => 0;
 
         /// <inheritdoc/>
-        protected override Item CreateItem(Player player)
-        {
-            return KeycardItem.CreateCustomKeycardTaskForce(player, KeycardName, KeycardHolder, KeycardPermissions, KeycardColor, PermissionColor, SerialLabel, RankIndex);
-        }
+        protected override Item CreateItem(Player player, ushort itemSerial)
+            => KeycardItem.CreateCustomKeycardTaskForce(player, KeycardName, KeycardHolder, KeycardPermissions, KeycardColor, PermissionColor, SerialLabel, RankIndex);
 
         /// <inheritdoc/>
         protected override Pickup CreatePickup(Vector3? position = null)
-        {
-            return KeycardItem.CreateCustomKeycardTaskForce(Player.Host, KeycardName, KeycardHolder, KeycardPermissions, KeycardColor, PermissionColor, SerialLabel, RankIndex).DropItem();
-        }
+            => KeycardItem.CreateCustomKeycardTaskForce(Player.Host!, KeycardName, KeycardHolder, KeycardPermissions, KeycardColor, PermissionColor, SerialLabel, RankIndex)!.DropItem();
     }
 }

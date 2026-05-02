@@ -51,15 +51,12 @@ namespace CustomItemLib.API.CustomKeycards
         public virtual Color LabelColor => Color.white;
 
         /// <inheritdoc/>
-        protected override Item CreateItem(Player player)
-        {
-            return KeycardItem.CreateCustomKeycardManagement(player, KeycardName, Label, KeycardPermissions, KeycardColor, PermissionColor, LabelColor);
-        }
+        protected override Item CreateItem(Player player, ushort itemSerial)
+            => KeycardItem.CreateCustomKeycardManagement(player, KeycardName, Label, KeycardPermissions, KeycardColor, PermissionColor, LabelColor);
 
         /// <inheritdoc/>
         protected override Pickup CreatePickup(Vector3? position = null)
-        {
-            return KeycardItem.CreateCustomKeycardManagement(Player.Host, KeycardName, Label, KeycardPermissions, KeycardColor, PermissionColor, LabelColor).DropItem();
-        }
+            => KeycardItem.CreateCustomKeycardManagement(Player.Host!, KeycardName, Label, KeycardPermissions, KeycardColor, PermissionColor, LabelColor)!.DropItem();
+        
     }
 }
