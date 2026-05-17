@@ -27,7 +27,13 @@ namespace CustomItemLib.Commands
                 response = "You don't have the required permission to use this command.";
                 return false;
             }
-            
+
+            if (arguments.Count < 2)
+            {
+                response = $"You need to provide at least 2 arguments. Usage: ci drop {string.Join(" ", Usage)}";
+                return false;
+            }
+
             List<Player> targetPlayers = [];
             if (arguments.Count >= 3 && TryGetRAPlayerIds(arguments, 2, out var hubs))
             {
@@ -54,10 +60,10 @@ namespace CustomItemLib.Commands
                 response = $"Could not find an item under the namespace of {itemNamespace}. Please make sure that item exists.";
                 return false;
             }
-            
+
             if (!int.TryParse(arguments.At(1), out int amount))
             {
-                response = "Invalid item namespace format. Expected format: 'plugin_namespace:item_identifier'";
+                response = "Invalid item drop amount. Expected an integer.";
                 return false;
             }
 

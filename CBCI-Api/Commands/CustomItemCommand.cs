@@ -20,6 +20,8 @@ namespace CustomItemLib.Commands
         public override void LoadGeneratedCommands()
         {
             RegisterCommand(new CustomItemGiveCommand());
+            RegisterCommand(new CustomItemListCommand());
+            RegisterCommand(new CustomItemDropCommand());
         }
 
         public CustomItemCommand()
@@ -35,7 +37,7 @@ namespace CustomItemLib.Commands
                 return false;
             }
 
-            response = $"Use one of the following SubCommands: [{Commands.Keys.Aggregate((a, b) => $"{a}, {b}")}]";
+            response = $"Use one of the following SubCommands: [\n{string.Join("\n", Commands.Values.Select(c => $"  - {c.Command}{(string.IsNullOrWhiteSpace(c.Description) ? "" : $" - {Description}")}{(c is IUsageProvider usageProvider ? $"\n   > Usage: {string.Join(", ", usageProvider.Usage)}" : "")}"))}\n]";
             return false;
         }
     }

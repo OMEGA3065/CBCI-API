@@ -28,6 +28,12 @@ namespace CustomItemLib.Commands
                 return false;
             }
 
+            if (arguments.Count < 1)
+            {
+                response = $"You need to provide at least 1 argument. Usage: ci give {string.Join(" ", Usage)}";
+                return false;
+            }
+
             List<Player> targetPlayers = [];
             if (Player.TryGet(sender, out var runningPlayer) && arguments.Count == 1)
             {

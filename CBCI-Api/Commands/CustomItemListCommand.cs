@@ -39,14 +39,11 @@ namespace CustomItemLib.Commands
                     return true;
                 }
                 List<(string @namespace, string itemName)> Items = [];
-                foreach (var kvp in CustomItemManager.items)
+                foreach (var (@namespace, item) in CustomItemManager.items)
                 {
-                    var @namespace = kvp.Key;
-                    var @item = kvp.Value;
-
                     if (@namespace.PluginNamespace == targetPluginSpace)
                     {
-                        Items.Add((@namespace.ToString(), @item.Name));
+                        Items.Add((@namespace.ToString(), item.Name));
                     }
                 }
                 if (Items.Count == 0)
@@ -58,7 +55,7 @@ namespace CustomItemLib.Commands
                 response = $"{Items.Count} items were found in {targetPluginSpace}:*\nList of items: [\n{Items.Select(tuple => $"{tuple.@namespace} => {tuple.itemName}").Aggregate((a, b) => $"{a}\n{b}")}\n]";
                 return true;
             }
-            var list = CustomItemManager.items.Keys.Select(ns => ns.PluginNamespace).Distinct();
+            var list = CustomItemManager.items.Keys.Select(ns => ns.PluginNamespace).Distinct().ToList();
             response = $"{list.Count()} Plugin Namespaces have been registerd.\nUse cbci list <Namespace> for items in one of the namespaces found below. Or use cbci list {PrintAllItemsFlag} to print all items.\nList of Plugin Namespaces: [\n{(list.Count() != 0 ? list.Aggregate((a, b) => $"{a}\n{b}") : "")}\n]";
             return true;
         }
