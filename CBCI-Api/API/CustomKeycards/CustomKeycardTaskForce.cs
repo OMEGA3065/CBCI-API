@@ -49,7 +49,7 @@ namespace CustomItemLib.API.CustomKeycards
         /// </summary>
         /// <value>The keycard's permission circles' color.</value>
         public virtual Color PermissionColor => Color.white;
-        
+
         /// <summary>
         /// The number of circles around the hole in the keycard's <see cref="LabApi.Features.Wrappers.Pickup"/>.
         /// </summary>
@@ -61,7 +61,12 @@ namespace CustomItemLib.API.CustomKeycards
             => KeycardItem.CreateCustomKeycardTaskForce(player, KeycardName, KeycardHolder, KeycardPermissions, KeycardColor, PermissionColor, SerialLabel, RankIndex);
 
         /// <inheritdoc/>
-        protected override Pickup CreatePickup(Vector3? position = null)
-            => KeycardItem.CreateCustomKeycardTaskForce(Player.Host!, KeycardName, KeycardHolder, KeycardPermissions, KeycardColor, PermissionColor, SerialLabel, RankIndex)!.DropItem();
+        protected override Pickup CreatePickup(Vector3? position, ushort itemSerial)
+        {
+            var keycard = KeycardItem.CreateCustomKeycardTaskForce(Player.Host!, KeycardName, KeycardHolder, KeycardPermissions, KeycardColor, PermissionColor, SerialLabel, RankIndex)!.DropItem();
+            if (position.HasValue)
+                keycard.Position = position.Value;
+            return keycard;
+        }
     }
 }

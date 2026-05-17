@@ -25,7 +25,7 @@ namespace CustomItemLib.API.CustomKeycards
         /// </summary>
         /// <value>The name of the keycard's holder.</value>
         public virtual string KeycardHolder => "";
-        
+
         /// <summary>
         /// The name shown on the keycard's <see cref="LabApi.Features.Wrappers.Pickup"/>.
         /// </summary>
@@ -55,7 +55,7 @@ namespace CustomItemLib.API.CustomKeycards
         /// </summary>
         /// <value>The keycard's label's color.</value>
         public virtual Color LabelColor => Color.white;
-        
+
         /// <summary>
         /// The amount of wear the keycard's <see cref="LabApi.Features.Wrappers.Pickup"/> will show.
         /// </summary>
@@ -64,9 +64,17 @@ namespace CustomItemLib.API.CustomKeycards
 
         /// <inheritdoc/>
         protected override Item CreateItem(Player player, ushort itemSerial)
-            => KeycardItem.CreateCustomKeycardSite02(player, KeycardName, KeycardHolder, Label, KeycardPermissions, KeycardColor, PermissionColor, LabelColor, WearLevel);
+            => KeycardItem.CreateCustomKeycardSite02(player, KeycardName, KeycardHolder, Label, KeycardPermissions,
+                KeycardColor, PermissionColor, LabelColor, WearLevel);
 
         /// <inheritdoc/>
-        protected override Pickup CreatePickup(Vector3? position = null)
-            => KeycardItem.CreateCustomKeycardSite02(Player.Host!, KeycardName, KeycardHolder, Label, KeycardPermissions, KeycardColor, PermissionColor, LabelColor, WearLevel)!.DropItem(); }
+        protected override Pickup CreatePickup(Vector3? position, ushort itemSerial)
+        {
+            var keycard = KeycardItem.CreateCustomKeycardSite02(Player.Host!, KeycardName, KeycardHolder, Label,
+                KeycardPermissions, KeycardColor, PermissionColor, LabelColor, WearLevel)!.DropItem();
+            if (position.HasValue)
+                keycard.Position = position.Value;
+            return keycard;
+        }
+    }
 }

@@ -19,7 +19,7 @@ namespace CustomItemLib.API.CustomKeycards
         /// </summary>
         /// <value>The keycard's name.</value>
         public abstract string KeycardName { get; }
-        
+
         /// <summary>
         /// The name shown on the keycard's <see cref="LabApi.Features.Wrappers.Pickup"/>.
         /// </summary>
@@ -55,8 +55,12 @@ namespace CustomItemLib.API.CustomKeycards
             => KeycardItem.CreateCustomKeycardManagement(player, KeycardName, Label, KeycardPermissions, KeycardColor, PermissionColor, LabelColor);
 
         /// <inheritdoc/>
-        protected override Pickup CreatePickup(Vector3? position = null)
-            => KeycardItem.CreateCustomKeycardManagement(Player.Host!, KeycardName, Label, KeycardPermissions, KeycardColor, PermissionColor, LabelColor)!.DropItem();
-        
+        protected override Pickup CreatePickup(Vector3? position, ushort itemSerial)
+        {
+            var keycard = KeycardItem.CreateCustomKeycardManagement(Player.Host!, KeycardName, Label, KeycardPermissions, KeycardColor, PermissionColor, LabelColor)!.DropItem();
+            if (position.HasValue)
+                keycard.Position = position.Value;
+            return keycard;
+        }
     }
 }
