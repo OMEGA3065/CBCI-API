@@ -1,4 +1,5 @@
 using System.Reflection;
+using CustomItemLib.API.Attributes;
 using HarmonyLib;
 using LabApi.Features.Console;
 
@@ -94,17 +95,18 @@ namespace CustomItemLib.API
         /// <returns>An <see cref="IEnumerable{ICustomItem{object}}"/> of definitions that have been successfully registered.</returns>
         public static IEnumerable<ICustomItem<object>> RegisterAllItems(Assembly assembly)
         {
-            IEnumerable<ICustomItem<object>> registeredItems = [];
+            List<ICustomItem<object>> registeredItems = [];
             foreach (Type type in assembly.GetTypes())
             {
-                if (type.IsAbstract || type.IsInterface || !typeof(ICustomItem<object>).IsAssignableFrom(type))
+                if (type.IsAbstract || type.IsInterface || !typeof(ICustomItem<object>).IsAssignableFrom(type)
+                    || type.GetCustomAttribute<HiddenCustomItem>() != null)
                     continue;
                 try
                 {
                     var item = (ICustomItem<object>)Activator.CreateInstance(type);
                     if (RegisterItem(item))
                     {
-                        registeredItems = registeredItems.AddItem(item);
+                        registeredItems.Add(item);
                     }
                 }
                 catch (Exception ex)
