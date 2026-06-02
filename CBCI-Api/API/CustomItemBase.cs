@@ -283,8 +283,6 @@ namespace CustomItemLib.API
         /// </summary>
         public virtual void UnsubscribeEvents()
         {
-            LabApi.Events.Handlers.PlayerEvents.ChangingRole -= OnOwnerChangingRole;
-            LabApi.Events.Handlers.PlayerEvents.Dying -= OnOwnerDying;
             LabApi.Events.Handlers.PlayerEvents.Cuffing -= OnOwnerCuffing;
             LabApi.Events.Handlers.PlayerEvents.Escaping -= OnOwnerEscaping;
             LabApi.Events.Handlers.Scp914Events.ProcessingInventoryItem -= OnUpgradingInventoryItem;
@@ -309,10 +307,10 @@ namespace CustomItemLib.API
                     continue;
 
                 ev.Player.RemoveItem(item);
-                
+
                 foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.Serial))
                 {
-                    instance.Destroy(true); 
+                    instance.Destroy(true);
                 }
 
                 TrySpawn(ev.Player.Position, item, out _);
@@ -336,7 +334,7 @@ namespace CustomItemLib.API
 
                 foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.Serial))
                 {
-                    instance.Destroy(true); 
+                    instance.Destroy(true);
                 }
 
                 TrySpawn(ev.Player.Position, item, out _);
@@ -358,9 +356,9 @@ namespace CustomItemLib.API
 
                 ev.Player.RemoveItem(item);
 
-                foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.Serial))
+                foreach (var instance in Instances.FindAll(i => i.Serial == item.Serial))
                 {
-                    instance.Destroy(true); 
+                    instance.Destroy(true);
                 }
 
                 Timing.CallDelayed(1.5f, () => TrySpawn(ev.Player.Position, item, out _));
@@ -384,7 +382,7 @@ namespace CustomItemLib.API
 
                 foreach (var instance in Instances.FindAll(i => i is T typed && typed.Serial == item.Serial))
                 {
-                    instance.Destroy(true); 
+                    instance.Destroy(true);
                 }
 
                 TrySpawn(ev.Target.Position, item, out _);
