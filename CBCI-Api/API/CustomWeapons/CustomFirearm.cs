@@ -116,7 +116,7 @@ public abstract class CustomFirearm<T> : CustomItemBase<T> where T : ItemInstanc
     {
         if (MagazineSize is null) return;
         if (!Check(ev.FirearmItem)) return;
-        ev.IsAllowed = ev.FirearmItem.StoredAmmo < MagazineSize.Value;
+        ev.IsAllowed = ev.FirearmItem.StoredAmmo < MagazineSize.Value && ev.Player.GetAmmo(ev.FirearmItem.AmmoType) > 0;
     }
 
     protected virtual void OnOwnerReloadedWeapon(PlayerReloadedWeaponEventArgs ev)
