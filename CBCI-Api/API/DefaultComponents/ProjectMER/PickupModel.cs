@@ -48,7 +48,9 @@ public class PickupModel<T> : ComponentBase<T>
             if (!itemInstance.Check(ev)) return;
             if (ObjectSpawner.TrySpawnSchematic(itemInstance.PickupSchematicName, Vector3.zero, Quaternion.identity, new Vector3(0.35f, 0.35f, 0.35f), out var schematic))
             {
-                schematic.transform.SetParent(ev.transform, false);
+                var parent = ev.transform;
+                var child = schematic.transform;
+                child.SetParent(parent, false);
                 return;
             }
             Logger.Warn($"Failed to load schematic. Possibly a missing schematic ({itemInstance.PickupSchematicName}). No Item model loaded.");
