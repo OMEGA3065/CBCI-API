@@ -62,7 +62,6 @@ public abstract class CustomFirearm<T> : CustomItemBase<T> where T : ItemInstanc
         if (MagazineSize.HasValue)
         {
             FirearmMaxAmmo.MaxAmmoOverrides[firearm.Serial] = MagazineSize.Value;
-            Logger.Info($"Override Set for: {firearm.Serial}");
             Timing.CallDelayed(0, () =>
             {
                 if (!MagazineSize.HasValue || firearm.IsDestroyed)

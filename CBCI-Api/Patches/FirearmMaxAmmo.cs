@@ -12,10 +12,8 @@ public static class FirearmMaxAmmo
 
     public static void Postfix(MagazineModule __instance, ref int __result)
     {
-        Logger.Info($"AmmoMax postfix called on {__instance.Item.ItemSerial}");
         if (!MaxAmmoOverrides.TryGetValue(__instance.Item.ItemSerial, out var maxAmmo))
             return;
-        Logger.Info($"OVERRIDING RESULT: {maxAmmo}");
         __result = maxAmmo;
     }
 }
