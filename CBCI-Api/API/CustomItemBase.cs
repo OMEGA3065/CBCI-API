@@ -295,7 +295,7 @@ namespace CustomItemLib.API
         /// </summary>
         private void OnOwnerChangingRole(PlayerChangingRoleEventArgs ev)
         {
-            if (!ev.IsAllowed) return;
+            if (!ev.IsAllowed || ev.Player == null) return;
             if (ev.ChangeReason is RoleChangeReason.Escaped or RoleChangeReason.Destroyed or RoleChangeReason.LateJoin)
                 return;
 
