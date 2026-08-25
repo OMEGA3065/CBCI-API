@@ -1,3 +1,4 @@
+using CustomItemLib.Helpers;
 using LabApi.Events.Arguments.PlayerEvents;
 
 namespace CustomItemLib.API.DefaultComponents;
@@ -27,6 +28,6 @@ public class ItemSelectionHintComponent<T> : ComponentBase<T>
     {
         if (ev.NewItem is null) return;
         if (ev.NewItem.Serial != itemInstance.Serial) return;
-        ev.Player.SendHint($"You have selected:\n{itemInstance.Parent.Name}");
+        ev.Player.SendHintSpecial($"You have selected:\n{itemInstance.Parent.Name}");
     }
 }

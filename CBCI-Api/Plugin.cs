@@ -1,5 +1,6 @@
 using System.Reflection;
 using CustomItemLib.API;
+using CustomItemLib.Helpers;
 using HarmonyLib;
 using LabApi.Features;
 using LabApi.Features.Console;
@@ -34,6 +35,8 @@ namespace CustomItemLib
         {
             _harmony = new Harmony("omega3065.custom_item_lib");
             _harmony.PatchAll();
+
+            HintHelper.Load();
 
 #if IsRaCustomMenuBuild == false
             Compat.RaCustomMenuCompat.Init();

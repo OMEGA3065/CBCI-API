@@ -70,5 +70,6 @@
     <PackageReference Include="Northwood.LabAPI" Version="1.1.4" />
     <PackageReference Include="Lib.Harmony" Version="2.2.2" />
     <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
+    <PackageReference Include="RueI" Version="3.1.2" />
   </ItemGroup>
 </Project>
