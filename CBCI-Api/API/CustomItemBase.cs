@@ -182,6 +182,20 @@ namespace CustomItemLib.API
         /// <returns>Whether or not the item was spawned successfully.</returns>
         public bool TrySpawn(Vector3 position, ushort itemSerial, out T itemInstance)
         {
+            return TrySpawn(position, Quaternion.identity, itemSerial, out itemInstance);
+        }
+
+        /// <summary>
+        /// Tries to spawn this Item Definition's <see cref="ItemInstanceBase"/> at a specified
+        /// <see cref="UnityEngine.Vector3"/> position and <see cref="UnityEngine.Quaternion"/> rotation.
+        /// </summary>
+        /// <param name="position">The <see cref="UnityEngine.Vector3"/> where the item will be spawned.</param>
+        /// <param name="rotation">The <see cref="UnityEngine.Quaternion"/> rotation of the spawned item.</param>
+        /// <param name="itemSerial">The <see cref="ushort"/> item serial of the new item.</param>
+        /// <param name="itemInstance">The created <see cref="ItemInstanceBase"/>.</param>
+        /// <returns>Whether or not the item was spawned successfully.</returns>
+        public bool TrySpawn(Vector3 position, Quaternion rotation, ushort itemSerial, out T itemInstance)
+        {
             itemInstance = CreateInstance();
             if (itemInstance == null) return false;
             itemInstance.Namespace = Namespace;
@@ -193,6 +207,7 @@ namespace CustomItemLib.API
                 return false;
             }
             itemInstance.Serial = item.Serial;
+            item.Rotation = rotation;
             item.Spawn();
             return true;
         }
@@ -206,6 +221,19 @@ namespace CustomItemLib.API
         public bool TrySpawn(Vector3 position, out T itemInstance)
         {
             return TrySpawn(position, 0, out itemInstance);
+        }
+
+        /// <summary>
+        /// Tries to spawn this Item Definition's <see cref="ItemInstanceBase"/> at a specified
+        /// <see cref="UnityEngine.Vector3"/> position and <see cref="UnityEngine.Quaternion"/> rotation.
+        /// </summary>
+        /// <param name="position">The <see cref="UnityEngine.Vector3"/> where the item will be spawned.</param>
+        /// <param name="rotation">The <see cref="UnityEngine.Quaternion"/> rotation of the spawned item.</param>
+        /// <param name="itemInstance">The created <see cref="ItemInstanceBase"/>.</param>
+        /// <returns>Whether or not the item was spawned successfully.</returns>
+        public bool TrySpawn(Vector3 position, Quaternion rotation, out T itemInstance)
+        {
+            return TrySpawn(position, rotation, 0, out itemInstance);
         }
 
         /// <summary>
@@ -438,6 +466,12 @@ namespace CustomItemLib.API
         public bool TrySpawn(Vector3 position)
         {
             return TrySpawn(position, out _);
+        }
+
+        /// <inheritdoc/>
+        public bool TrySpawn(Vector3 position, Quaternion rotation)
+        {
+            return TrySpawn(position, rotation, out _);
         }
 
         /// <inheritdoc/>
