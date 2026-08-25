@@ -92,6 +92,15 @@ namespace CustomItemLib.API
         public bool TrySpawn(Vector3 position);
 
         /// <summary>
+        /// Tries to spawn this Item Definition's <see cref="ItemInstanceBase"/> at a specified
+        /// <see cref="UnityEngine.Vector3"/> position and <see cref="UnityEngine.Quaternion"/> rotation.
+        /// </summary>
+        /// <param name="position">The <see cref="UnityEngine.Vector3"/> where the item will be spawned.</param>
+        /// <param name="rotation">The <see cref="UnityEngine.Quaternion"/> rotation of the spawned item.</param>
+        /// <returns>Whether or not the item was spawned successfully.</returns>
+        public bool TrySpawn(Vector3 position, Quaternion rotation);
+
+        /// <summary>
         /// Tries to spawn this Item Definition's <see cref="ItemInstanceBase"/> at a specified <see cref="UnityEngine.Vector3"/> position without creating a new <see cref="LabApi.Features.Wrappers.Pickup"/>.
         /// </summary>
         /// <param name="position">The <see cref="UnityEngine.Vector3"/> where the item will be spawned.</param>
