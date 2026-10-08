@@ -1,5 +1,6 @@
 using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
+using MEC;
 
 namespace CustomItemLib.Helpers;
 
@@ -32,15 +33,22 @@ public static class HintHelper
             return;
         }
 
-        RueHelpers.Display(player, "CBCI-SelectionHint", hint, 200f, 3f);
+        RueHelpers.SetDisplay(player, "CBCI-SelectionHint", hint, 350f, 3f);
     }
 }
 
 internal static class RueHelpers
 {
-    public static void Display(Player player, string tag, string hint, float position, float duration)
+    public static void SetDisplay(Player player, string tag, string hint, float position, float duration)
     {
         var display = RueI.API.RueDisplay.Get(player);
-        display.Show(new RueI.API.Elements.Tag(tag), new RueI.API.Elements.BasicElement(position, hint), duration);
+        var t = new RueI.API.Elements.Tag(tag);
+        display.Remove(t);
+        Timing.CallDelayed(0, () =>
+        {
+            if (player.IsDestroyed) return;
+            display = RueI.API.RueDisplay.Get(player);
+            display.Show(t, new RueI.API.Elements.BasicElement(position, hint), duration);
+        });
     }
 }

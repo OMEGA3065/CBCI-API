@@ -28,6 +28,11 @@ public class ItemSelectionHintComponent<T> : ComponentBase<T>
     {
         if (ev.NewItem is null) return;
         if (ev.NewItem.Serial != itemInstance.Serial) return;
-        ev.Player.SendHintSpecial($"You have selected:\n{itemInstance.Parent.Name}");
+        ev.Player.SendHintSpecial($"""
+                                   <line-height=55%><size=50%><color=yellow>Selected</color></size>
+                                   </line-height><line-height=80%><size=75%>{itemInstance.Parent.Name}</size>
+                                   </line-height><line-height=45%><size=40%><color=green>Description</color></size>
+                                   </line-height><line-height=65%><size=65%>{itemInstance.Parent.Description}</line-height></size>
+                                   """);
     }
 }
