@@ -1,3 +1,4 @@
+using InventorySystem.Items;
 using LabApi.Features.Wrappers;
 using UnityEngine;
 

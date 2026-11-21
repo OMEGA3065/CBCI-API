@@ -1,6 +1,4 @@
-using System;
 using InventorySystem.Items.ThrowableProjectiles;
-using LabApi.Features.Wrappers;
 using UnityEngine;
 
 namespace CustomItemLib.API.DefaultComponents;

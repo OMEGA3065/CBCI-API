@@ -1,19 +1,11 @@
-using System;
 using CustomItemLib.Helpers;
 using CustomItemLib.Patches;
-using Decals;
 using InventorySystem.Items;
-using InventorySystem.Items.Autosync;
 using InventorySystem.Items.Firearms.Attachments;
-using InventorySystem.Items.Firearms.Modules;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Wrappers;
-using LiteNetLib.Utils;
 using MEC;
-using Mirror;
-using RelativePositioning;
 using UnityEngine;
-using Logger = LabApi.Features.Console.Logger;
 
 namespace CustomItemLib.API.CustomWeapons;
 
@@ -31,7 +23,7 @@ public abstract class CustomFirearm<T> : CustomItemBase<T> where T : ItemInstanc
         {
             ItemType type = base.Type;
             if (!type.ToString().StartsWith("Gun"))
-                throw new InvalidTypeException($"The item type ({type}) cannot be used for the type of ({nameof(CustomFirearm<T>)}). Please use one of: [{Enum.GetNames(typeof(ItemType)).Where(t => t.StartsWith("Gun")).Aggregate((a, b) => $"{a}, {b}")}]");
+                throw new ArgumentException($"The item type ({type}) cannot be used for the type of ({nameof(CustomFirearm<T>)}). Please use one of: [{Enum.GetNames(typeof(ItemType)).Where(t => t.StartsWith("Gun")).Aggregate((a, b) => $"{a}, {b}")}]");
             return type;
         }
     }

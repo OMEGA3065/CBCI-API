@@ -1,3 +1,5 @@
+using InventorySystem.Items;
+
 namespace CustomItemLib.API.Attributes
 {
     /// <summary>
@@ -9,7 +11,7 @@ namespace CustomItemLib.API.Attributes
     public sealed class CustomItemAttributeBase(Type ComponentType) : Attribute
     {
         /// <summary>
-        /// Gets the attribute's <see cref="CustomItemLib.API.ICustomItemComponent{CustomItemLib.API.ItemInstanceBase}"/>.
+        /// Gets the attribute's <see cref="ItemInstanceBase"/>.
         /// </summary>
         public object Component { get; } = Activator.CreateInstance(ComponentType);
     }

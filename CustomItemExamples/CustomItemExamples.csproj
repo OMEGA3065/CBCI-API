@@ -6,30 +6,17 @@
     <DebugType>embedded</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="..\..\References\Assembly-CSharp.dll">
-    </Reference>
-    <Reference Include="..\..\References\CommandSystem.Core.dll">
-    </Reference>
-    <Reference Include="..\..\TestPlugin\server\SL\LabAPI\plugins\global\0Harmony.dll">
-    </Reference>
-    <Reference Include="MEC">
-      <HintPath>..\..\References\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\References\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="Mirror">
-      <HintPath>..\..\References\Mirror.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Security">
-      <HintPath>..\..\References\Mono.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\References\UnityEngine.PhysicsModule.dll</HintPath>
-    </Reference>
+    <Reference Include="Northwood.SCPSL"/>
+    <Reference Include="CommandSystem.Core"/>
+    <Reference Include="DigitalDust"/>
+    <Reference Include="UnityEngine.CoreModule"/>
+    <Reference Include="Mirror"/>
+    <Reference Include="Mono.Security"/>
+    <Reference Include="UnityEngine.PhysicsModule"/>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Northwood.LabAPI" Version="1.1.4" />
+    <PackageReference Include="Northwood.LabAPI" Version="1.1.7" />
+    <PackageReference Include="Lib.Harmony" Version="2.2.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../CBCI-Api/CBCI-Api.csproj" />

@@ -1,8 +1,6 @@
-using System;
+using InventorySystem.Items;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Wrappers;
-using LiteNetLib.Utils;
-using UnityEngine;
 
 namespace CustomItemLib.API.CustomWeapons;
 
@@ -17,7 +15,7 @@ public abstract class CustomGrenade<T> : CustomItemBase<T> where T : ItemInstanc
     /// Allowed types for this class.
     /// </summary>
     private readonly ItemType[] grenadeTypes = [ItemType.GrenadeHE, ItemType.GrenadeFlash];
-    
+
     /// <inheritdoc/>
     public override ItemType Type
     {
@@ -25,7 +23,7 @@ public abstract class CustomGrenade<T> : CustomItemBase<T> where T : ItemInstanc
         {
             ItemType type = base.Type;
             if (!grenadeTypes.Contains(type))
-                throw new InvalidTypeException($"The item type ({type}) cannot be used for the type of ({nameof(CustomGrenade<T>)}). Please use one of: [{grenadeTypes.Select(t => t.ToString()).Aggregate((a, b) => $"{a}, {b}")}]");
+                throw new ArgumentException($"The item type ({type}) cannot be used for the type of ({nameof(CustomGrenade<T>)}). Please use one of: [{grenadeTypes.Select(t => t.ToString()).Aggregate((a, b) => $"{a}, {b}")}]");
             return type;
         }
     }

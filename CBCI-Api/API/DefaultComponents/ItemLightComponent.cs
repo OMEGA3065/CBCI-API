@@ -1,4 +1,3 @@
-using System;
 using InventorySystem.Items.Pickups;
 using LabApi.Features.Wrappers;
 using MEC;

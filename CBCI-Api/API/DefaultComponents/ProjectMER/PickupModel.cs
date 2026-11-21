@@ -1,10 +1,8 @@
-using System;
-using CustomItemLib.API;
-using CustomItemLib.API.DefaultComponents;
 using InventorySystem.Items.Pickups;
-using LabApi.Features.Console;
+using LabApi.Features.Wrappers;
 using MEC;
 using ProjectMER.Features;
+using ProjectMER.Features.Objects;
 using UnityEngine;
 using Logger = LabApi.Features.Console.Logger;
 

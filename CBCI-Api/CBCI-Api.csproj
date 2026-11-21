@@ -15,47 +15,16 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp" Publicize="true" Private="false" Pack="false" />
-    <Reference Include="CommandSystem.Core">
-      <Private>false</Private>
-      <Pack>false</Pack>
-    </Reference>
-    <Reference Include="RaCustomMenu">
-      <Private>false</Private>
-      <Pack>false</Pack>
-    </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <Private>false</Private>
-      <Pack>false</Pack>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <Private>false</Private>
-      <Pack>false</Pack>
-    </Reference>
-    <Reference Include="Mirror">
-      <Private>false</Private>
-      <Pack>false</Pack>
-    </Reference>
-    <Reference Include="Mono.Security">
-      <Private>false</Private>
-      <Pack>false</Pack>
-    </Reference>
-    <Reference Include="UnityEngine.PhysicsModule">
-      <Private>false</Private>
-      <Pack>false</Pack>
-    </Reference>
-    <Reference Include="NorthwoodLib">
-      <Private>false</Private>
-      <Pack>false</Pack>
-    </Reference>
-    <Reference Include="ProjectMER">
-      <Private>false</Private>
-      <Pack>false</Pack>
-    </Reference>
-    <Reference Include="FilmmakerSolo">
-      <Private>false</Private>
-      <Pack>false</Pack>
-    </Reference>
+    <Reference Include="Northwood.SCPSL" Publicize="true" Private="false" Pack="false" />
+    <Reference Include="CommandSystem.Core" Private="false" Pack="false" />
+    <Reference Include="RaCustomMenu" Private="false" Pack="false" />
+    <Reference Include="DigitalDust" Private="false" Pack="false" />
+    <Reference Include="UnityEngine.CoreModule" Private="false" Pack="false" />
+    <Reference Include="Mirror" Private="false" Pack="false" />
+    <Reference Include="Mono.Security" Private="false" Pack="false" />
+    <Reference Include="UnityEngine.PhysicsModule" Private="false" Pack="false" />
+    <Reference Include="NorthwoodLib" Private="false" Pack="false" />
+    <Reference Include="ProjectMER" Private="false" Pack="false" />
 
     <None Include="..\LICENSE" Pack="true" PackagePath="" />
     <None Include="..\README.md" Pack="true" PackagePath="" />
@@ -67,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Northwood.LabAPI" Version="1.1.4" />
+    <PackageReference Include="Northwood.LabAPI" Version="1.1.7" />
     <PackageReference Include="Lib.Harmony" Version="2.2.2" />
     <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
     <PackageReference Include="RueI" Version="3.1.2" />

@@ -1,8 +1,5 @@
-using System.Reflection;
-using CustomItemExamples.Example;
 using CustomItemLib;
 using CustomItemLib.API;
-using CustomItemLib.Example;
 using HarmonyLib;
 using LabApi.Features;
 using LabApi.Loader.Features.Plugins;
@@ -23,7 +20,7 @@ namespace CustomItemExamples
         public override Version Version => new(0, 1, 6);
         public override LoadPriority Priority => LoadPriority.Highest;
         public override Version RequiredApiVersion => new(LabApiProperties.CompiledVersion);
-        
+
         public CustomItemLibPlugin()
         {
             Instance = this;
@@ -35,7 +32,7 @@ namespace CustomItemExamples
         {
             _harmony = new Harmony("omega3065.cbciapi");
             _harmony.PatchAll();
-            
+
             // You can register items individually
             // items = [
             //     new TestItem(),

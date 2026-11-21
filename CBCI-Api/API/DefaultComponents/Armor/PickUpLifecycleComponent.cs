@@ -1,8 +1,6 @@
 using InventorySystem.Items;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Handlers;
-using LabApi.Features.Console;
-using LabApi.Features.Wrappers;
 
 namespace CustomItemLib.API.DefaultComponents.Armor;
 

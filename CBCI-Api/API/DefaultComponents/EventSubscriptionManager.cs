@@ -1,5 +1,4 @@
 using LabApi.Events;
-using LabApi.Features.Console;
 
 namespace CustomItemLib.API.DefaultComponents;
 
@@ -11,7 +10,7 @@ public class EventSubscriptionManager<T>(T item)
     private readonly T ItemInstance = item;
 
     private readonly Dictionary<string, object> _subscriptions = [];
-    
+
     public Action<TEvent> GetOrCreate<TEvent>(string type, SubscriptionDelegate<TEvent> method)
     {
         if (_subscriptions.TryGetValue(type, out var uncast))
@@ -25,10 +24,10 @@ public class EventSubscriptionManager<T>(T item)
             method(ev, ItemInstance);
         };
         _subscriptions[type] = handler;
-        
+
         return handler;
     }
-    
+
     public Action GetOrCreate(string type, SubscriptionDelegate method)
     {
         if (_subscriptions.TryGetValue(type, out var uncast))
@@ -42,10 +41,10 @@ public class EventSubscriptionManager<T>(T item)
             method(ItemInstance);
         };
         _subscriptions[type] = handler;
-        
+
         return handler;
     }
-    
+
     public LabEventHandler<TEvent> GetOrCreateLab<TEvent>(string type, SubscriptionDelegate<TEvent> method)
         where TEvent : EventArgs
     {
@@ -60,10 +59,10 @@ public class EventSubscriptionManager<T>(T item)
             method(ev, ItemInstance);
         };
         _subscriptions[type] = handler;
-        
+
         return handler;
     }
-    
+
     public LabEventHandler GetOrCreateLab(string type, SubscriptionDelegate method)
     {
         if (_subscriptions.TryGetValue(type, out var uncast))
@@ -77,7 +76,7 @@ public class EventSubscriptionManager<T>(T item)
             method(ItemInstance);
         };
         _subscriptions[type] = handler;
-        
+
         return handler;
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Wrappers;
 

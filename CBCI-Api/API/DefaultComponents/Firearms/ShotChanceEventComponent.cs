@@ -1,6 +1,5 @@
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Events.Handlers;
-using PlayerStatsSystem;
 using Random = UnityEngine.Random;
 
 namespace CustomItemLib.API.DefaultComponents.Firearms;

@@ -1,6 +1,7 @@
 using CustomItemLib.API;
 using CustomItemLib.API.Attributes;
 using CustomItemLib.API.DefaultComponents;
+using InventorySystem.Items;
 using UnityEngine;
 
 namespace CustomItemExamples.Example

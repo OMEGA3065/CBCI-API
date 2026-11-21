@@ -1,5 +1,4 @@
 using InventorySystem.Items.Firearms.Modules;
-using LabApi.Features.Console;
 
 namespace CustomItemLib.Patches;
 

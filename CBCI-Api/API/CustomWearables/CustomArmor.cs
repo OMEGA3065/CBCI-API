@@ -1,10 +1,8 @@
-using System;
 using InventorySystem.Items;
 using InventorySystem.Items.Armor;
 using LabApi.Events.Arguments.PlayerEvents;
 using UnityEngine;
 using LabApi.Features.Wrappers;
-using LiteNetLib.Utils;
 
 namespace CustomItemLib.API.CustomWearables;
 
@@ -22,7 +20,7 @@ public abstract class CustomArmor<T> : CustomItemBase<T> where T : ItemInstanceB
         {
             ItemType type = base.Type;
             if (!type.ToString().StartsWith("Armor"))
-                throw new InvalidTypeException($"The item type ({type}) cannot be used for the type of ({nameof(CustomArmor<T>)}). Please use one of: [{Enum.GetNames(typeof(ItemType)).Where(t => t.StartsWith("Armor")).Aggregate((a, b) => $"{a}, {b}")}]");
+                throw new ArgumentException($"The item type ({type}) cannot be used for the type of ({nameof(CustomArmor<T>)}). Please use one of: [{Enum.GetNames(typeof(ItemType)).Where(t => t.StartsWith("Armor")).Aggregate((a, b) => $"{a}, {b}")}]");
             return type;
         }
     }

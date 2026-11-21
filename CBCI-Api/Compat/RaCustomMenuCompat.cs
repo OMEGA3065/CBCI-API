@@ -1,5 +1,3 @@
-using LabApi.Features.Console;
-
 namespace CustomItemLib.Compat;
 
 internal static class RaCustomMenuCompat

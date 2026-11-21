@@ -1,6 +1,4 @@
 using CustomItemLib.API;
-using CustomItemLib.Patches;
-using LabApi.Features.Console;
 using LabApi.Features.Wrappers;
 using NorthwoodLib.Pools;
 
@@ -20,7 +18,7 @@ public class ItemNamespaceProvider : RaCustomMenu.API.Provider
     {
         if (RaCustomMenu.API.Provider.providersLoaded.Any(p => p.CategoryName == pluginNamespace))
             return;
-        
+
         RaCustomMenu.API.Provider.RegisterDynamicProvider($"{pluginNamespace}", true, referenceHub =>
         {
             List<RaCustomMenu.API.LimitedDummyAction> list = [new("<color=red>[CLOSE]</color>", (sender) =>

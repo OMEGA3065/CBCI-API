@@ -1,8 +1,6 @@
-using System;
 using CustomItemLib.API;
 using CustomItemLib.API.DefaultComponents;
 using LabApi.Events.Arguments.PlayerEvents;
-using LabApi.Events.Arguments.ServerEvents;
 
 namespace WackyGrenades.CustomItems.ItemComponents;
 

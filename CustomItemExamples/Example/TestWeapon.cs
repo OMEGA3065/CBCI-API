@@ -1,8 +1,8 @@
-using CustomItemExamples.Example;
 using CustomItemLib.API;
 using CustomItemLib.API.Attributes;
 using CustomItemLib.API.CustomWeapons;
 using CustomItemLib.API.DefaultComponents;
+using InventorySystem.Items;
 using InventorySystem.Items.Firearms.Attachments;
 using UnityEngine;
 

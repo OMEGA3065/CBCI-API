@@ -1,4 +1,3 @@
-using System;
 using LabApi.Events.Arguments.ServerEvents;
 
 namespace CustomItemLib.API.DefaultComponents;

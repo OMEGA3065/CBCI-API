@@ -1,7 +1,5 @@
-using System;
 using System.Reflection;
 using LabApi.Events;
-using LabApi.Features.Console;
 
 namespace CustomItemLib.API.DefaultComponents;
 
@@ -21,7 +19,7 @@ public abstract class ComponentBase<T> : ICustomItemComponent<T> where T : ItemI
         EventSubscriptions[item.InstanceId] = manager;
         return manager;
     }
-    
+
     protected Action<TEvent> GetEvent<TEvent>(T instance,
         EventSubscriptionManager<T>.SubscriptionDelegate<TEvent> method, string name = null)
     {
@@ -29,7 +27,7 @@ public abstract class ComponentBase<T> : ICustomItemComponent<T> where T : ItemI
         var manager = GetOrCreateManager(instance);
         return manager.GetOrCreate(name, method);
     }
-    
+
     protected Action GetEvent(T instance,
         EventSubscriptionManager<T>.SubscriptionDelegate method, string name = null)
     {
@@ -37,7 +35,7 @@ public abstract class ComponentBase<T> : ICustomItemComponent<T> where T : ItemI
         var manager = GetOrCreateManager(instance);
         return manager.GetOrCreate(name, method);
     }
-    
+
     protected LabEventHandler<TEvent> GetLabEvent<TEvent>(T instance,
         EventSubscriptionManager<T>.SubscriptionDelegate<TEvent> method, string name = null)
         where TEvent : EventArgs
@@ -46,7 +44,7 @@ public abstract class ComponentBase<T> : ICustomItemComponent<T> where T : ItemI
         var manager = GetOrCreateManager(instance);
         return manager.GetOrCreateLab(name, method);
     }
-    
+
     protected LabEventHandler GetLabEvent(T instance,
         EventSubscriptionManager<T>.SubscriptionDelegate method, string name = null)
     {
@@ -54,7 +52,7 @@ public abstract class ComponentBase<T> : ICustomItemComponent<T> where T : ItemI
         var manager = GetOrCreateManager(instance);
         return manager.GetOrCreateLab(name, method);
     }
-    
+
     /// <inheritdoc/>
     public virtual void DestroyComponent(ICustomItem<T> item) { }
 

@@ -1,13 +1,6 @@
-using System;
 using AdminToys;
-using CustomItemLib.API;
-using CustomItemLib.API.DefaultComponents;
-using CustomPlayerEffects;
 using InventorySystem.Items;
-using InventorySystem.Items.Pickups;
 using LabApi.Events.Arguments.PlayerEvents;
-using LabApi.Features.Console;
-using MEC;
 using ProjectMER.Features;
 using ProjectMER.Features.Objects;
 using UnityEngine;

@@ -1,8 +1,6 @@
-using InventorySystem;
 using InventorySystem.Items;
 using InventorySystem.Items.Pickups;
 using LabApi.Features.Wrappers;
-using Mirror;
 
 namespace CustomItemLib.API
 {

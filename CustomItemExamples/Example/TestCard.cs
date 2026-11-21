@@ -3,7 +3,6 @@ using CustomItemLib.API.Attributes;
 using CustomItemLib.API.CustomKeycards;
 using CustomItemLib.API.DefaultComponents;
 using LabApi.Features.Wrappers;
-using UnityEngine;
 
 namespace CustomItemExamples.Example
 {

@@ -2,6 +2,7 @@ using CustomItemLib.API;
 using CustomItemLib.API.Attributes;
 using CustomItemLib.API.CustomWeapons;
 using CustomItemLib.API.DefaultComponents;
+using InventorySystem.Items;
 
 namespace CustomItemExamples.Example
 {
