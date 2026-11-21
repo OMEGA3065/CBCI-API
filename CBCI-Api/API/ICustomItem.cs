@@ -21,6 +21,11 @@ namespace CustomItemLib.API
         public string Description { get; }
 
         /// <summary>
+        /// The color of this Item.
+        /// </summary>
+        public Color NameColor { get; }
+
+        /// <summary>
         /// The ID part of this Item's namespace (ex. pluginNamespace:ID).
         /// </summary>
         public string Id { get; }

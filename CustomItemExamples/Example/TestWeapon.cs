@@ -10,7 +10,7 @@ namespace CustomItemLib.Example
 {
     [CustomItem(ItemType.GunE11SR)]
     [CustomItemAttributeBase(typeof(ItemLightComponent<TestWeaponInstance>))]
-    [CustomItemAttributeBase(typeof(ItemSelectionHintComponent<TestWeaponInstance>))]
+    [CustomItemAttributeBase(typeof(ItemSelectionDisplayComponent))]
     public class TestWeapon : CustomFirearm<TestWeaponInstance>
     {
         public override string Name => "Testing Gun";

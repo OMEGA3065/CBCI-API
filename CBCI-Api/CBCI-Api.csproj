@@ -13,6 +13,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/OMEGA3065/CBCI-API/</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RootNamespace>CustomItemLib</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Northwood.SCPSL" Publicize="true" Private="false" Pack="false" />
@@ -23,6 +24,8 @@
     <Reference Include="Mirror" Private="false" Pack="false" />
     <Reference Include="Mono.Security" Private="false" Pack="false" />
     <Reference Include="UnityEngine.PhysicsModule" Private="false" Pack="false" />
+    <Reference Include="UnityEngine.UIElementsModule" Private="false" Pack="false" />
+    <Reference Include="UnityEngine.TextRenderingModule" Private="false" Pack="false" />
     <Reference Include="NorthwoodLib" Private="false" Pack="false" />
     <Reference Include="ProjectMER" Private="false" Pack="false" />
 
@@ -39,6 +42,6 @@
     <PackageReference Include="Northwood.LabAPI" Version="1.1.7" />
     <PackageReference Include="Lib.Harmony" Version="2.2.2" />
     <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
-    <PackageReference Include="RueI" Version="3.1.2" />
+    <PackageReference Include="RueI" Version="3.2.0" />
   </ItemGroup>
 </Project>

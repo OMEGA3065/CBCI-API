@@ -8,7 +8,7 @@ namespace CustomItemExamples.Example
 {
     [CustomItem(ItemType.Medkit)]
     [CustomItemAttributeBase(typeof(ItemLightComponent<TestItemInstance>))]
-    [CustomItemAttributeBase(typeof(ItemSelectionHintComponent<TestItemInstance>))]
+    [CustomItemAttributeBase(typeof(ItemSelectionDisplayComponent))]
     public class TestItem : CustomItemBase<TestItemInstance>
     {
         public override string Name => "Custom Medkit";

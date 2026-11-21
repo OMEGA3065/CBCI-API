@@ -7,7 +7,7 @@ using LabApi.Features.Wrappers;
 namespace CustomItemExamples.Example
 {
     [CustomItemAttributeBase(typeof(TestComponent))]
-    [CustomItemAttributeBase(typeof(ItemSelectionHintComponent<TestKeycardInstance>))]
+    [CustomItemAttributeBase(typeof(ItemSelectionDisplayComponent))]
     public class TestCard : CustomKeycardMetalCase<TestKeycardInstance>
     {
         public override string Name => "Testing Keycard";

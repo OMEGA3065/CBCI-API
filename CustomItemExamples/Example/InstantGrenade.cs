@@ -7,7 +7,7 @@ using InventorySystem.Items;
 namespace CustomItemExamples.Example
 {
     [CustomItem(ItemType.GrenadeHE)]
-    [CustomItemAttributeBase(typeof(ItemSelectionHintComponent<TestGrenadeInstance>))]
+    [CustomItemAttributeBase(typeof(ItemSelectionDisplayComponent))]
     [CustomItemAttributeBase(typeof(ColliderExplodeComponent<TestGrenadeInstance>))]
     public class InstantGrenade : CustomGrenade<TestGrenadeInstance>
     {

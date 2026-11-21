@@ -26,6 +26,9 @@ namespace CustomItemLib.API
         public abstract string Name { get; }
         /// <inheritdoc/>
         public abstract string Description { get; }
+
+        public Color NameColor => Color.white;
+
         /// <inheritdoc/>
         public abstract string Id { get; }
         /// <inheritdoc/>
