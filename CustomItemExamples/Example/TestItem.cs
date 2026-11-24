@@ -1,13 +1,15 @@
 using CustomItemLib.API;
 using CustomItemLib.API.Attributes;
 using CustomItemLib.API.DefaultComponents;
+using CustomItemLib.Helpers;
 using InventorySystem.Items;
 using UnityEngine;
+using Utils;
 
 namespace CustomItemExamples.Example
 {
     [CustomItem(ItemType.Medkit)]
-    [CustomItemAttributeBase(typeof(ItemLightComponent<TestItemInstance>))]
+    [CustomItemAttributeBase(typeof(ItemOutlineComponent<TestItemInstance>))]
     [CustomItemAttributeBase(typeof(ItemSelectionDisplayComponent))]
     public class TestItem : CustomItemBase<TestItemInstance>
     {
@@ -16,19 +18,14 @@ namespace CustomItemExamples.Example
         public override string Id => "custom_medkit";
     }
 
-    public class TestItemInstance : ItemInstanceBase, IItemLight
+    public class TestItemInstance : ItemInstanceBase, IItemOutline, IItemAnimatedOutlineColor
     {
-        public TestItemInstance()
-        {
-            Health = UnityEngine.Random.Range(0f, 100f);
-        }
+        public Color ItemOutlineColor => Color.green;
 
-        public float Health { get; set; } = 100f;
+        public float ItemOutlineWidth => 3f;
 
-        public Color ItemLightColor => Color.green;
+        public bool ItemOutlineFull => false;
 
-        public float ItemLightRange => 4f;
-
-        public float ItemLightIntensity => 2f;
+        public AnimationColorCurve ItemOutlineColorCurve => AnimationCurveHelpers.GetPhaseInOutCurve(ItemOutlineColor, 1f, 1f);
     }
 }

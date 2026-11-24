@@ -91,13 +91,15 @@ public class ItemOutlineComponent<T> : ComponentBase<T>
 
     protected virtual void OnPickupDestroyed(ItemPickupBase pickup, T itemInstance)
     {
-        // Cleanup logic shouldn't be necessary maybe?
+        if (!_outlineEffects.TryGetValue(pickup.Info.Serial, out var oldOutline)) return;
+        pickup.TryRemoveOutlineEffect(oldOutline);
     }
 
     protected virtual void OnPickupCreated(ItemPickupBase pickup, T itemInstance)
     {
         if (!itemInstance.Check(pickup)) return;
-        if (_outlineEffects.ContainsKey(pickup.Info.Serial)) return;
+        if (_outlineEffects.TryGetValue(pickup.Info.Serial, out var oldOutline))
+            pickup.TryRemoveOutlineEffect(oldOutline);
 
         Timing.CallDelayed(Timing.WaitForOneFrame, () =>
         {

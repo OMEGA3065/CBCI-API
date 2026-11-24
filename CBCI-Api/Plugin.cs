@@ -31,7 +31,6 @@ namespace CustomItemLib
             _harmony.PatchAll();
 
             HintHelper.Load();
-            AnimationCurveHelpers.GenerateCurves();
 
 #if IsRaCustomMenuBuild == false
             Compat.RaCustomMenuCompat.Init();
